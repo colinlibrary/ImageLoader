@@ -1,5 +1,4 @@
 # ImageLoader
-基于Glide+glide：okhttp+Glide图片变换库做的一个简单的封装
 
 中文 | [In English](docs/README.md) 
 
@@ -32,32 +31,18 @@
     * [动态设置颜色](#动态设置颜色)
     * [动态设置图片](#动态设置图片)
   * [获取当前使用皮肤](#获取当前使用皮肤)
-* [AlertDialog换肤](docs/AlertDialog.md)
-* [更新日志](docs/ChangeLog.md)
-  * [skin-support 更新日志](docs/ChangeLog.md#skin-support-基础控件-支持)
-  * [skin-support-design 更新日志](docs/ChangeLog.md#skin-support-design-material-design-支持)
-  * [skin-support-cardview 更新日志](docs/ChangeLog.md#skin-support-cardview-cardview-支持)
-  * [skin-support-constraint-layout 更新日志](docs/ChangeLog.md#skin-support-constraint-layout-constraintlayout-支持)
 * [第三方控件适配库](docs/ThirdPartSupport.md)
   * [hdodenhof/CircleImageView](docs/ThirdPartSupport.md#hdodenhofcircleimageview)
   * [H07000223/FlycoTabLayout](docs/ThirdPartSupport.md#h07000223flycotablayout)
 * [缺点](#缺点)
-* [谁在使用](#谁在使用)
-* [FAQ](docs/FAQ.md)
-* [技术交流](#技术交流)
-* [LICENSE](#license-mit)
 
 ## 介绍
 
-Android-skin-support: 一款用心去做的Android 换肤框架, 极低的学习成本, 极好的用户体验.
-
-只需要一行代码, 就可以实现换肤, 你值得拥有!!!
-
+ImageLoader: 基于Glide+glide：okhttp+Glide图片变换库做的一个简单的封装.极大的简化使用Glide成本：
 ```java
-SkinCompatManager.withoutActivity(this).loadSkin();
+   GlideImageLoader.getInstance().displayWithDrable(context,url)?.intoTargetView(imageview)
 ```
-
-就这么简单, 你的APK已经拥有了强大的换肤功能, 当然现在是拥有了换肤功能, 别忘了[制作皮肤包](#应用内换肤).
+最基础的使用，这样便可实现普通图片以及GIF图的加载显示。
 
 ### 功能
 
@@ -437,28 +422,4 @@ https://github.com/ximsfei/Android-skin-support/blob/master/androidx/skin-suppor
 
 * 同一个LayoutInflater只能设置一次Factory，容易和同类库产生冲突
 
-## 谁在使用
-
-如果你想提交作品，欢迎提出 [PR](https://github.com/ximsfei/Android-skin-support/tree/master/docs/who-use-it) 或联系[作者](#技术交流)。
-
-<table align="center">
-    <tr align="center">
-        <td><img width="96" height="96" src="https://github.com/ximsfei/Android-skin-support/blob/master/docs/who-use-it/sohunews_explore-icon.png"/></td>
-        <td><img width="96" height="96" src="https://github.com/ximsfei/Android-skin-support/blob/master/docs/who-use-it/vflynote-icon.png"/></td>
-        <td><img width="96" height="96" src="https://github.com/ximsfei/Android-skin-support/blob/master/docs/who-use-it/qoo-app.png"/></td>
-        <td><img width="96" height="96" src="https://github.com/ximsfei/Android-skin-support/blob/master/docs/who-use-it/dwnews.png"/></td>
-    </tr>
-    <tr align="center">
-        <td><b><a href="https://k.sohu.com/">搜狐新闻探索版</a></b></td>
-        <td><b><a href="http://www.iyuji.cn/iyuji/home">讯飞语记</a></b></td>
-        <td><b><a href="https://news.qoo-app.com/">qoo app</a></b></td>
-        <td><b><a href="http://www.dwnews.com/">多维新闻</a></b></td>
-    </tr>
-</table>
-
-## 技术交流
-
-![](https://github.com/ximsfei/Res/blob/master/Android%26%2332%3B%E6%8D%A2%E8%82%A4.png)
-
-## [License MIT](LICENSE)
 
