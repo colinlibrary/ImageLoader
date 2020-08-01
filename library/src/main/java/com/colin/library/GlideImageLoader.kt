@@ -455,6 +455,7 @@ class GlideImageLoader : ImageLoader {
     //内存缓存清理（主线程）
     fun clearMemoryCache(context: Context?) {
         GlideApp.get(context!!).clearMemory()
+
     }
 
     //磁盘缓存清理（子线程）
