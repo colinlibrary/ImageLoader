@@ -1,9 +1,8 @@
-package com.ifenghui.imageloaderlibrary
+package com.colin.library
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
-import com.colin.library.ScaleTypeMenu
 import com.colin.library.progress.OnProgressListener
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 

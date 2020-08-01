@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.colin.library.progress.OnProgressListener
-import com.ifenghui.imageloaderlibrary.GlideImageLoader
-import com.ifenghui.imageloaderlibrary.ImageLoaderListener
+import com.colin.library.GlideImageLoader
+import com.colin.library.ImageLoaderListener
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_main.*
 

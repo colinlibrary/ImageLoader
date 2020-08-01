@@ -1,4 +1,4 @@
-package com.ifenghui.imageloaderlibrary
+package com.colin.library
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -18,7 +18,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
-import com.colin.library.*
 import com.colin.library.progress.OnProgressListener
 import com.colin.library.progress.ProgressManager
 import jp.wasabeef.glide.transformations.BlurTransformation
