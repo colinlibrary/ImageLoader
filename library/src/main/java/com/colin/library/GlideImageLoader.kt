@@ -89,17 +89,19 @@ class GlideImageLoader : ImageLoader {
          * 设置 缓存策略
          */
         @JvmStatic
-        fun initdiskCacheMode(diskCacheMenu: DiskCacheMenu) {
+        fun apply(diskCacheMenu: DiskCacheMenu):Companion {
             this.diskCacheMenu=diskCacheMenu
+            return GlideImageLoader
         }
 
         /**
          * 设置 placeholder error 占位图
          */
         @JvmStatic
-        fun initPlaceHolderAndError(placeholder: Any, error: Any) {
+        fun apply(placeholder: Any, error: Any):Companion {
             placeHolderId = placeholder
             errorId = error
+            return GlideImageLoader
         }
 
 
@@ -107,16 +109,18 @@ class GlideImageLoader : ImageLoader {
          * 设置缓存大小
          */
         @JvmStatic
-        fun initCrossTime(duration: Int) {
+        fun apply(duration: Int):Companion {
             CROSS_TIME=duration
+            return GlideImageLoader
         }
 
         /**
          * 设置缓存大小
          */
         @JvmStatic
-        fun initCacheSize(cacheSize: Long) {
+        fun apply(cacheSize: Long):Companion {
             CACHE_SIZE=cacheSize
+            return GlideImageLoader
         }
 
         /**
@@ -131,8 +135,9 @@ class GlideImageLoader : ImageLoader {
          * 设置缓存路径
          */
         @JvmStatic
-        fun initCachePath(cachePath: String) {
+        fun apply(cachePath: String):Companion {
             CACHE_PATH=cachePath
+            return GlideImageLoader
         }
 
         /**
