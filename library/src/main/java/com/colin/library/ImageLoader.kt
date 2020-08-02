@@ -36,22 +36,40 @@ interface ImageLoader {
     /**
      * drable 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithDrable(context: CONTEXT, url: RES?,roundRadius: Int): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithDrable(
+        context: CONTEXT,
+        url: RES?,
+        roundRadius: Int
+    ): ImageLoader?
 
     /**
      * drable 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithDrable(context: CONTEXT, url: RES?,roundRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithDrable(
+        context: CONTEXT,
+        url: RES?,
+        roundRadius: Int,
+        cornerTypeMenu: CornerTypeMenu
+    ): ImageLoader?
 
     /**
      * bitmap 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?,roundRadius: Int): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithBitmap(
+        context: CONTEXT,
+        url: RES?,
+        roundRadius: Int
+    ): ImageLoader?
 
     /**
      * bitmap 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?,roundRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithBitmap(
+        context: CONTEXT,
+        url: RES?,
+        roundRadius: Int,
+        cornerTypeMenu: CornerTypeMenu
+    ): ImageLoader?
 
     /**
      * 高斯模糊的方式加载
@@ -71,7 +89,7 @@ interface ImageLoader {
     /**
      * 添加drable 加载监听
      */
-    fun <CONTEXT, RES> displayWithDrableAndLoaderListener(
+    fun <CONTEXT, RES> displayWithDrable(
         context: CONTEXT,
         url: RES?,
         imageListener: ImageLoaderListener<Drawable>?
@@ -80,16 +98,16 @@ interface ImageLoader {
     /**
      * 添加drable 加载进度监听
      */
-    fun <CONTEXT, RES> displayWithDrableAndProgressListener(
+    fun <CONTEXT, RES> displayWithDrable(
         context: CONTEXT,
         url: RES?,
-        onProgressListener: OnProgressListener?
+        onProgressListener: OnProgressListener<Drawable>?
     ): ImageLoader?
 
     /**
      * 添加bitmap 加载监听
      */
-    fun <CONTEXT, RES> displayWithBitmapAndLoaderListener(
+    fun <CONTEXT, RES> displayWithBitmap(
         context: CONTEXT,
         url: RES?,
         imageListener: ImageLoaderListener<Bitmap>?
@@ -98,11 +116,27 @@ interface ImageLoader {
     /**
      * 添加bitmap 加载进度监听
      */
-    fun <CONTEXT, RES> displayWithBitmapAndProgressListener(
+    fun <CONTEXT, RES> displayWithBitmap(
         context: CONTEXT,
         url: RES?,
-        onProgressListener: OnProgressListener?
+        onProgressListener: OnProgressListener<Bitmap>?
     ): ImageLoader?
+
+    /**
+     * 获取URL  bitmap资源
+     */
+    fun <CONTEXT, RES> getUrlWithBitmap(
+        context: CONTEXT,
+        url: RES?, imageListener: ImageLoaderListener<Bitmap>?
+    )
+    /**
+     * 获取URL  bitmap资源
+     */
+    fun <CONTEXT, RES> getUrlWithBitmap(
+        context: CONTEXT,
+        url: RES?, onProgressListener: OnProgressListener<Bitmap>?
+    )
+
 
     /**
      * 重置ScaleType （此变换会覆盖GLide之前对资源做的变化）
@@ -117,12 +151,15 @@ interface ImageLoader {
     /**
      * 重置占位图
      */
-    fun <RESHOLDER, RESERROR>resetPlaceHolder(placeholder: RESHOLDER, error: RESERROR): ImageLoader?
+    fun <RESHOLDER, RESERROR> resetPlaceHolder(
+        placeholder: RESHOLDER,
+        error: RESERROR
+    ): ImageLoader?
 
     /**
      * 重置缓存策略
      */
-    fun resetDiskCacheStrategy(strategy: DiskCacheStrategy):ImageLoader?
+    fun resetDiskCacheStrategy(strategy: DiskCacheStrategy): ImageLoader?
 
     /**
      * 设置显示view

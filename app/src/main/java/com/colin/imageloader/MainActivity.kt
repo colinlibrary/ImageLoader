@@ -2,6 +2,7 @@ package com.colin.imageloader
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     private fun bindListener(){
         tv_listener?.setOnClickListener {
             tv_listener?.text="图片加载中。。。"
-            GlideImageLoader.getInstance().displayWithBitmapAndLoaderListener(this,defaultUrl2,object :
+            GlideImageLoader.getInstance().displayWithBitmap(this,defaultUrl2,object :
                 ImageLoaderListener<Bitmap> {
                 override fun onRequestSuccess(resource: Bitmap?) {
                     tv_listener?.visibility= View.INVISIBLE
@@ -57,12 +58,20 @@ class MainActivity : AppCompatActivity() {
         }
         tv_process?.setOnClickListener {
             tv_process?.text="0%"
-            GlideImageLoader.getInstance().displayWithDrableAndProgressListener(this,defaultUrl5, OnProgressListener { isComplete, percentage, bytesRead, totalBytes ->
-                if (isComplete)
-                    tv_process?.visibility= View.INVISIBLE
+            GlideImageLoader.getInstance().displayWithDrable(this,defaultUrl5,object : OnProgressListener<Drawable>{
+                override fun onProgress(
+                    isComplete: Boolean,
+                    percentage: Int,
+                    bytesRead: Long,
+                    totalBytes: Long
+                ) {
+                    tv_process?.text=percentage?.toString()+"%"
+                }
 
-                tv_process?.text=percentage?.toString()+"%"
-            })?.intoTargetView(iv_defalult_process)
+                override fun onComplete(resource: Drawable?) {
+                    tv_process?.visibility=View.INVISIBLE
+                }
+            } )?.intoTargetView(iv_defalult_process)
         }
     }
 }

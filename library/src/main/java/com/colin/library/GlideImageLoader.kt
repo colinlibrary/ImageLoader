@@ -16,8 +16,10 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
+import com.bumptech.glide.request.transition.Transition
 import com.colin.library.progress.OnProgressListener
 import com.colin.library.progress.ProgressManager
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -61,12 +63,20 @@ class GlideImageLoader : ImageLoader {
         @SuppressLint("StaticFieldLeak")
         @Volatile
         private var INSTANCE: ImageLoader? = null
-        private var CACHE_SIZE=1024*1024*5L
-        private var CACHE_PATH=""
+
+        //缓存空间
+        private var CACHE_SIZE = 1024 * 1024 * 5L
+
+        //缓存地址
+        private var CACHE_PATH = ""
+
         //占位资源
-        private var placeHolderId :Any?=null
-        private var errorId :Any?=null
-        private var diskCacheMenu: DiskCacheMenu?=null
+        private var placeHolderId: Any? = null
+        private var errorId: Any? = null
+
+        //缓存策略
+        private var diskCacheMenu: DiskCacheMenu? = null
+
         //动画时间
         private var CROSS_TIME = 500
 
@@ -89,8 +99,8 @@ class GlideImageLoader : ImageLoader {
          * 设置 缓存策略
          */
         @JvmStatic
-        fun apply(diskCacheMenu: DiskCacheMenu):Companion {
-            this.diskCacheMenu=diskCacheMenu
+        fun apply(diskCacheMenu: DiskCacheMenu): Companion {
+            this.diskCacheMenu = diskCacheMenu
             return GlideImageLoader
         }
 
@@ -98,7 +108,7 @@ class GlideImageLoader : ImageLoader {
          * 设置 placeholder error 占位图
          */
         @JvmStatic
-        fun apply(placeholder: Any, error: Any):Companion {
+        fun apply(placeholder: Any, error: Any): Companion {
             placeHolderId = placeholder
             errorId = error
             return GlideImageLoader
@@ -109,8 +119,8 @@ class GlideImageLoader : ImageLoader {
          * 设置缓存大小
          */
         @JvmStatic
-        fun apply(duration: Int):Companion {
-            CROSS_TIME=duration
+        fun apply(duration: Int): Companion {
+            CROSS_TIME = duration
             return GlideImageLoader
         }
 
@@ -118,8 +128,8 @@ class GlideImageLoader : ImageLoader {
          * 设置缓存大小
          */
         @JvmStatic
-        fun apply(cacheSize: Long):Companion {
-            CACHE_SIZE=cacheSize
+        fun apply(cacheSize: Long): Companion {
+            CACHE_SIZE = cacheSize
             return GlideImageLoader
         }
 
@@ -135,8 +145,8 @@ class GlideImageLoader : ImageLoader {
          * 设置缓存路径
          */
         @JvmStatic
-        fun apply(cachePath: String):Companion {
-            CACHE_PATH=cachePath
+        fun apply(cachePath: String): Companion {
+            CACHE_PATH = cachePath
             return GlideImageLoader
         }
 
@@ -148,9 +158,6 @@ class GlideImageLoader : ImageLoader {
             return CACHE_PATH
         }
     }
-
-
-
 
 
     /**
@@ -179,8 +186,9 @@ class GlideImageLoader : ImageLoader {
      * drable 的方式获取资源
      */
     override fun <CONTEXT, RES> displayWithDrable(context: CONTEXT, url: RES?): ImageLoader? {
-        REQUESTINSTANCE = getGlideWith(context)?.asDrawable()?.load(url)?.transition(drawableCrossFade)
-        initDiskCacheMode(diskCacheMenu?:DiskCacheMenu.AUTOMATIC)
+        REQUESTINSTANCE =
+            getGlideWith(context)?.asDrawable()?.load(url)?.transition(drawableCrossFade)
+        initDiskCacheMode(diskCacheMenu ?: DiskCacheMenu.AUTOMATIC)
         resetPlaceHolder(placeHolderId, errorId)
         resetScaleType(ScaleTypeMenu.Default)
         return INSTANCE
@@ -191,7 +199,7 @@ class GlideImageLoader : ImageLoader {
      */
     override fun <CONTEXT, RES> displayWithBitmap(context: CONTEXT, url: RES?): ImageLoader? {
         REQUESTINSTANCE = getGlideWith(context)?.asBitmap()?.load(url)?.transition(bitmapCrossFade)
-        initDiskCacheMode(diskCacheMenu?:DiskCacheMenu.AUTOMATIC)
+        initDiskCacheMode(diskCacheMenu ?: DiskCacheMenu.AUTOMATIC)
         resetPlaceHolder(placeHolderId, errorId)
         resetScaleType(ScaleTypeMenu.Default)
         return INSTANCE
@@ -238,22 +246,22 @@ class GlideImageLoader : ImageLoader {
         cornerTypeMenu: CornerTypeMenu
     ): ImageLoader? {
         displayWithDrable(context, url)
-        var cornerType=when(cornerTypeMenu){
-            CornerTypeMenu.ALL->RoundedCornersTransformation.CornerType.ALL
-            CornerTypeMenu.TOP_LEFT->RoundedCornersTransformation.CornerType.TOP_LEFT
-            CornerTypeMenu.TOP_RIGHT->RoundedCornersTransformation.CornerType.TOP_RIGHT
-            CornerTypeMenu.BOTTOM_LEFT->RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-            CornerTypeMenu.BOTTOM_RIGHT->RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-            CornerTypeMenu.TOP->RoundedCornersTransformation.CornerType.TOP
-            CornerTypeMenu.BOTTOM->RoundedCornersTransformation.CornerType.BOTTOM
-            CornerTypeMenu.LEFT->RoundedCornersTransformation.CornerType.LEFT
-            CornerTypeMenu.RIGHT->RoundedCornersTransformation.CornerType.RIGHT
-            CornerTypeMenu.OTHER_TOP_LEFT->RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT
-            CornerTypeMenu.OTHER_TOP_RIGHT->RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT
-            CornerTypeMenu.OTHER_BOTTOM_LEFT->RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT
-            CornerTypeMenu.OTHER_BOTTOM_RIGHT->RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT
-            CornerTypeMenu.DIAGONAL_FROM_TOP_LEFT->RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT
-            CornerTypeMenu.DIAGONAL_FROM_TOP_RIGHT->RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT
+        var cornerType = when (cornerTypeMenu) {
+            CornerTypeMenu.ALL -> RoundedCornersTransformation.CornerType.ALL
+            CornerTypeMenu.TOP_LEFT -> RoundedCornersTransformation.CornerType.TOP_LEFT
+            CornerTypeMenu.TOP_RIGHT -> RoundedCornersTransformation.CornerType.TOP_RIGHT
+            CornerTypeMenu.BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.BOTTOM_LEFT
+            CornerTypeMenu.BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
+            CornerTypeMenu.TOP -> RoundedCornersTransformation.CornerType.TOP
+            CornerTypeMenu.BOTTOM -> RoundedCornersTransformation.CornerType.BOTTOM
+            CornerTypeMenu.LEFT -> RoundedCornersTransformation.CornerType.LEFT
+            CornerTypeMenu.RIGHT -> RoundedCornersTransformation.CornerType.RIGHT
+            CornerTypeMenu.OTHER_TOP_LEFT -> RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT
+            CornerTypeMenu.OTHER_TOP_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT
+            CornerTypeMenu.OTHER_BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT
+            CornerTypeMenu.OTHER_BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_LEFT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_RIGHT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT
         }
         REQUESTINSTANCE =
             REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0, cornerType))
@@ -276,26 +284,32 @@ class GlideImageLoader : ImageLoader {
     /**
      * bitmap 方式获取
      */
-    override fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?, roundRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader? {
+    override fun <CONTEXT, RES> displayRoundWithBitmap(
+        context: CONTEXT,
+        url: RES?,
+        roundRadius: Int,
+        cornerTypeMenu: CornerTypeMenu
+    ): ImageLoader? {
         displayWithBitmap(context, url)
-        var cornerType=when(cornerTypeMenu){
-            CornerTypeMenu.ALL->RoundedCornersTransformation.CornerType.ALL
-            CornerTypeMenu.TOP_LEFT->RoundedCornersTransformation.CornerType.TOP_LEFT
-            CornerTypeMenu.TOP_RIGHT->RoundedCornersTransformation.CornerType.TOP_RIGHT
-            CornerTypeMenu.BOTTOM_LEFT->RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-            CornerTypeMenu.BOTTOM_RIGHT->RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-            CornerTypeMenu.TOP->RoundedCornersTransformation.CornerType.TOP
-            CornerTypeMenu.BOTTOM->RoundedCornersTransformation.CornerType.BOTTOM
-            CornerTypeMenu.LEFT->RoundedCornersTransformation.CornerType.LEFT
-            CornerTypeMenu.RIGHT->RoundedCornersTransformation.CornerType.RIGHT
-            CornerTypeMenu.OTHER_TOP_LEFT->RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT
-            CornerTypeMenu.OTHER_TOP_RIGHT->RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT
-            CornerTypeMenu.OTHER_BOTTOM_LEFT->RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT
-            CornerTypeMenu.OTHER_BOTTOM_RIGHT->RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT
-            CornerTypeMenu.DIAGONAL_FROM_TOP_LEFT->RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT
-            CornerTypeMenu.DIAGONAL_FROM_TOP_RIGHT->RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT
+        var cornerType = when (cornerTypeMenu) {
+            CornerTypeMenu.ALL -> RoundedCornersTransformation.CornerType.ALL
+            CornerTypeMenu.TOP_LEFT -> RoundedCornersTransformation.CornerType.TOP_LEFT
+            CornerTypeMenu.TOP_RIGHT -> RoundedCornersTransformation.CornerType.TOP_RIGHT
+            CornerTypeMenu.BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.BOTTOM_LEFT
+            CornerTypeMenu.BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
+            CornerTypeMenu.TOP -> RoundedCornersTransformation.CornerType.TOP
+            CornerTypeMenu.BOTTOM -> RoundedCornersTransformation.CornerType.BOTTOM
+            CornerTypeMenu.LEFT -> RoundedCornersTransformation.CornerType.LEFT
+            CornerTypeMenu.RIGHT -> RoundedCornersTransformation.CornerType.RIGHT
+            CornerTypeMenu.OTHER_TOP_LEFT -> RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT
+            CornerTypeMenu.OTHER_TOP_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT
+            CornerTypeMenu.OTHER_BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT
+            CornerTypeMenu.OTHER_BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_LEFT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_RIGHT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT
         }
-        REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0, cornerType))
+        REQUESTINSTANCE =
+            REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0, cornerType))
         return INSTANCE
     }
 
@@ -334,7 +348,7 @@ class GlideImageLoader : ImageLoader {
     /**
      * 添加drable 加载监听
      */
-    override fun <CONTEXT, RES> displayWithDrableAndLoaderListener(
+    override fun <CONTEXT, RES> displayWithDrable(
         context: CONTEXT,
         url: RES?,
         imageListener: ImageLoaderListener<Drawable>?
@@ -370,10 +384,10 @@ class GlideImageLoader : ImageLoader {
     /**
      * 添加drable 加载进度监听
      */
-    override fun <CONTEXT, RES> displayWithDrableAndProgressListener(
+    override fun <CONTEXT, RES> displayWithDrable(
         context: CONTEXT,
         url: RES?,
-        onProgressListener: OnProgressListener?
+        onProgressListener: OnProgressListener<Drawable>?
     ): ImageLoader? {
         if (onProgressListener != null && url is String)
             ProgressManager.addListener(url, onProgressListener)
@@ -391,13 +405,9 @@ class GlideImageLoader : ImageLoader {
                 return false
             }
 
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
+            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean
             ): Boolean {
+                onProgressListener?.onComplete(resource)
                 if (onProgressListener != null && url is String)
                     removeProcessListener(url)
                 return false
@@ -409,7 +419,7 @@ class GlideImageLoader : ImageLoader {
     /**
      * 添加bitmap 加载监听
      */
-    override fun <CONTEXT, RES> displayWithBitmapAndLoaderListener(
+    override fun <CONTEXT, RES> displayWithBitmap(
         context: CONTEXT,
         url: RES?,
         imageListener: ImageLoaderListener<Bitmap>?
@@ -444,10 +454,10 @@ class GlideImageLoader : ImageLoader {
     /**
      * 添加bitmap 加载进度监听
      */
-    override fun <CONTEXT, RES> displayWithBitmapAndProgressListener(
+    override fun <CONTEXT, RES> displayWithBitmap(
         context: CONTEXT,
         url: RES?,
-        onProgressListener: OnProgressListener?
+        onProgressListener: OnProgressListener<Bitmap>?
     ): ImageLoader? {
         if (onProgressListener != null && url is String)
             ProgressManager.addListener(url, onProgressListener)
@@ -472,6 +482,7 @@ class GlideImageLoader : ImageLoader {
                 dataSource: DataSource?,
                 isFirstResource: Boolean
             ): Boolean {
+                onProgressListener?.onComplete(resource)
                 if (onProgressListener != null && url is String)
                     removeProcessListener(url)
                 return false
@@ -508,13 +519,14 @@ class GlideImageLoader : ImageLoader {
     /**
      * 重置占位图
      */
-    override fun <RESHOLDER, RESERROR> resetPlaceHolder(placeholder: RESHOLDER, error: RESERROR
+    override fun <RESHOLDER, RESERROR> resetPlaceHolder(
+        placeholder: RESHOLDER, error: RESERROR
     ): ImageLoader? {
         when (placeholder) {
             is Drawable -> REQUESTINSTANCE = REQUESTINSTANCE?.placeholder(placeholder)
             is Int -> REQUESTINSTANCE = REQUESTINSTANCE?.placeholder(placeholder)
         }
-        when (error){
+        when (error) {
             is Drawable -> REQUESTINSTANCE = REQUESTINSTANCE?.error(error)
             is Int -> REQUESTINSTANCE = REQUESTINSTANCE?.error(error)
 
@@ -585,6 +597,53 @@ class GlideImageLoader : ImageLoader {
      */
     override fun clearFileCache(context: Context?) {
         Thread(Runnable { context?.let { GlideApp.get(it).clearDiskCache() } }).start()
+    }
+
+    /**
+     * 获取URL  bitmap资源
+     */
+    override fun <CONTEXT, RES> getUrlWithBitmap(
+        context: CONTEXT,
+        url: RES?,
+        imageListener: ImageLoaderListener<Bitmap>?
+    ) {
+        getGlideWith(context)?.asBitmap()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
+            ?.into(object : SimpleTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    imageListener?.onRequestSuccess(resource)
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    super.onLoadFailed(errorDrawable)
+                    imageListener?.onRequestFailed()
+                }
+            })
+    }
+
+    /**
+     * 获取URL  bitmap资源
+     */
+    override fun <CONTEXT, RES> getUrlWithBitmap(
+        context: CONTEXT,
+        url: RES?,
+        onProgressListener: OnProgressListener<Bitmap>?
+    ) {
+        if (onProgressListener != null && url is String)
+            ProgressManager.addListener(url, onProgressListener)
+        getGlideWith(context)?.asBitmap()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
+            ?.into(object : SimpleTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    onProgressListener?.onComplete(resource)
+                    if (onProgressListener != null && url is String)
+                    removeProcessListener(url)
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    super.onLoadFailed(errorDrawable)
+                    if (onProgressListener != null && url is String)
+                    removeProcessListener(url)
+                }
+            })
     }
 
     /**
