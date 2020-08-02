@@ -32,7 +32,7 @@ ImageLoader: 基于Glide+glide：okhttp+Glide图片变换库做的一个简单�
 
 ## Demo
 
-![default](https://github.com/ximsfei/Res/blob/master/skin/preview/default.png)
+![default](https://github.com/colinlibrary/ImageLoader/blob/master/radio/device-2020-08-01-220928.mp4)
 ![app-in](https://github.com/ximsfei/Res/blob/master/skin/preview/app-in.png)
 ![plug-in](https://github.com/ximsfei/Res/blob/master/skin/preview/plug-in.png)
 
