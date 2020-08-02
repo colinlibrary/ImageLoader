@@ -1,6 +1,8 @@
 package com.colin.library;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -22,15 +24,21 @@ public class GlideCache extends AppGlideModule {
     @Override
     public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
 //        super.applyOptions(context, builder);
-
         //通过builder.setXXX进行配置.
-        long diskCacheSizeBytes = 1024 * 1024 * 500; // 500 MB
+        //设置缓存大小
+        long diskCacheSizeBytes = GlideImageLoader.getCacheSize();
+        if (diskCacheSizeBytes == 0)
+            diskCacheSizeBytes = 1024 * 1024 * 5; // 默认大小5 MB
+
         //手机app路径
-        String appRootPath = context.getCacheDir().getPath();
-//        Log.e("-----","缓存路径="+appRootPath);
+        String cachePath = GlideImageLoader.getCachePath();
+        if (TextUtils.isEmpty(cachePath))
+            cachePath = context.getCacheDir().getPath() + "/GlideDisk";//默认保存在app 缓存里
         builder.setDiskCache(
-                new DiskLruCacheFactory( appRootPath+"/GlideDisk", diskCacheSizeBytes )
+                new DiskLruCacheFactory(cachePath, diskCacheSizeBytes)
         );
+
+        Log.e("----",cachePath);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.colin.library.CornerTypeMenu
 import com.colin.library.progress.OnProgressListener
 import com.colin.library.GlideImageLoader
 import com.colin.library.ImageLoaderListener
@@ -28,9 +29,9 @@ class MainActivity : AppCompatActivity() {
         GlideImageLoader.getInstance().displayWithDrable(this,defaultUrl)?.intoTargetView(iv_defalult)
         GlideImageLoader.getInstance().displayWithBitmap(this,defaultUrl2)?.intoTargetView(iv_defalult_bitmap)
         GlideImageLoader.getInstance().displayRoundWithDrable(this,defaultUrl3,30,
-            RoundedCornersTransformation.CornerType.ALL)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_round)
+            CornerTypeMenu.ALL)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_round)
         GlideImageLoader.getInstance().displayRoundWithBitmap(this,defaultUrl3,30,
-            RoundedCornersTransformation.CornerType.TOP)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_bitmap_round)
+            CornerTypeMenu.TOP)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_bitmap_round)
         GlideImageLoader.getInstance().displayRoundWithDrable(this,defaultUrl4,30)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_gif)
         GlideImageLoader.getInstance().displayCircleWithDrable(this,defaultUrl4)?.intoTargetView(iv_defalult_git_round)
         GlideImageLoader.getInstance().displayWithBlur(this,defaultUrl,20)?.intoTargetView(iv_defalult_blur)

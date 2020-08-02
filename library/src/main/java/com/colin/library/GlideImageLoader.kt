@@ -28,8 +28,6 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
  */
 @Suppress("DEPRECATION")
 class GlideImageLoader : ImageLoader {
-    //动画时间
-    private val CROSS_TIME = 500
 
 
     //view默认宽高
@@ -44,16 +42,15 @@ class GlideImageLoader : ImageLoader {
 
     //Glide ScaleType样式
     private val defaultOptions: RequestOptions =
-        RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        RequestOptions().centerCrop()
     private val centerCropOptions: RequestOptions =
-        RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        RequestOptions().centerCrop()
     private val centerInsideOptions: RequestOptions =
-        RequestOptions().centerInside().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        RequestOptions().centerInside()
     private val fitCenterOptions: RequestOptions =
-        RequestOptions().fitCenter().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        RequestOptions().fitCenter()
     private val circleCropOptions: RequestOptions =
-        RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-
+        RequestOptions().circleCrop()
     private var REQUESTINSTANCE: GlideRequest<*>? = null
 
 
@@ -63,10 +60,21 @@ class GlideImageLoader : ImageLoader {
     companion object {
         @SuppressLint("StaticFieldLeak")
         @Volatile
-        private var INSTANCE: GlideImageLoader? = null
+        private var INSTANCE: ImageLoader? = null
+        private var CACHE_SIZE=1024*1024*5L
+        private var CACHE_PATH=""
+        //占位资源
+        private var placeHolderId :Any?=null
+        private var errorId :Any?=null
+        private var diskCacheMenu: DiskCacheMenu?=null
+        //动画时间
+        private var CROSS_TIME = 500
 
+        /**
+         * 获取实例
+         */
         @JvmStatic
-        fun getInstance(): GlideImageLoader {
+        fun getInstance(): ImageLoader {
             if (INSTANCE == null) {
                 synchronized(GlideImageLoader::class.java) {
                     if (INSTANCE == null) {
@@ -77,7 +85,67 @@ class GlideImageLoader : ImageLoader {
             return INSTANCE ?: GlideImageLoader()
         }
 
+        /**
+         * 设置 缓存策略
+         */
+        @JvmStatic
+        fun initdiskCacheMode(diskCacheMenu: DiskCacheMenu) {
+            this.diskCacheMenu=diskCacheMenu
+        }
+
+        /**
+         * 设置 placeholder error 占位图
+         */
+        @JvmStatic
+        fun initPlaceHolderAndError(placeholder: Any, error: Any) {
+            placeHolderId = placeholder
+            errorId = error
+        }
+
+
+        /**
+         * 设置缓存大小
+         */
+        @JvmStatic
+        fun initCrossTime(duration: Int) {
+            CROSS_TIME=duration
+        }
+
+        /**
+         * 设置缓存大小
+         */
+        @JvmStatic
+        fun initCacheSize(cacheSize: Long) {
+            CACHE_SIZE=cacheSize
+        }
+
+        /**
+         * 获取缓存大小
+         */
+        @JvmStatic
+        fun getCacheSize(): Long {
+            return CACHE_SIZE
+        }
+
+        /**
+         * 设置缓存路径
+         */
+        @JvmStatic
+        fun initCachePath(cachePath: String) {
+            CACHE_PATH=cachePath
+        }
+
+        /**
+         * 获取缓存路径
+         */
+        @JvmStatic
+        fun getCachePath(): String {
+            return CACHE_PATH
+        }
     }
+
+
+
 
 
     /**
@@ -106,9 +174,9 @@ class GlideImageLoader : ImageLoader {
      * drable 的方式获取资源
      */
     override fun <CONTEXT, RES> displayWithDrable(context: CONTEXT, url: RES?): ImageLoader? {
-        REQUESTINSTANCE =
-            getGlideWith(context)?.asDrawable()?.load(url)?.transition(drawableCrossFade)
-        resetPlaceHolder(R.mipmap.item_default, R.mipmap.item_default)
+        REQUESTINSTANCE = getGlideWith(context)?.asDrawable()?.load(url)?.transition(drawableCrossFade)
+        initDiskCacheMode(diskCacheMenu?:DiskCacheMenu.AUTOMATIC)
+        resetPlaceHolder(placeHolderId, errorId)
         resetScaleType(ScaleTypeMenu.Default)
         return INSTANCE
     }
@@ -118,7 +186,8 @@ class GlideImageLoader : ImageLoader {
      */
     override fun <CONTEXT, RES> displayWithBitmap(context: CONTEXT, url: RES?): ImageLoader? {
         REQUESTINSTANCE = getGlideWith(context)?.asBitmap()?.load(url)?.transition(bitmapCrossFade)
-        resetPlaceHolder(R.mipmap.item_default, R.mipmap.item_default)
+        initDiskCacheMode(diskCacheMenu?:DiskCacheMenu.AUTOMATIC)
+        resetPlaceHolder(placeHolderId, errorId)
         resetScaleType(ScaleTypeMenu.Default)
         return INSTANCE
     }
@@ -161,9 +230,26 @@ class GlideImageLoader : ImageLoader {
         context: CONTEXT,
         url: RES?,
         roundRadius: Int,
-        cornerType: RoundedCornersTransformation.CornerType
+        cornerTypeMenu: CornerTypeMenu
     ): ImageLoader? {
         displayWithDrable(context, url)
+        var cornerType=when(cornerTypeMenu){
+            CornerTypeMenu.ALL->RoundedCornersTransformation.CornerType.ALL
+            CornerTypeMenu.TOP_LEFT->RoundedCornersTransformation.CornerType.TOP_LEFT
+            CornerTypeMenu.TOP_RIGHT->RoundedCornersTransformation.CornerType.TOP_RIGHT
+            CornerTypeMenu.BOTTOM_LEFT->RoundedCornersTransformation.CornerType.BOTTOM_LEFT
+            CornerTypeMenu.BOTTOM_RIGHT->RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
+            CornerTypeMenu.TOP->RoundedCornersTransformation.CornerType.TOP
+            CornerTypeMenu.BOTTOM->RoundedCornersTransformation.CornerType.BOTTOM
+            CornerTypeMenu.LEFT->RoundedCornersTransformation.CornerType.LEFT
+            CornerTypeMenu.RIGHT->RoundedCornersTransformation.CornerType.RIGHT
+            CornerTypeMenu.OTHER_TOP_LEFT->RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT
+            CornerTypeMenu.OTHER_TOP_RIGHT->RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT
+            CornerTypeMenu.OTHER_BOTTOM_LEFT->RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT
+            CornerTypeMenu.OTHER_BOTTOM_RIGHT->RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_LEFT->RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_RIGHT->RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT
+        }
         REQUESTINSTANCE =
             REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0, cornerType))
         return INSTANCE
@@ -182,15 +268,29 @@ class GlideImageLoader : ImageLoader {
         return INSTANCE
     }
 
-    override fun <CONTEXT, RES> displayRoundWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        roundRadius: Int,
-        cornerType: RoundedCornersTransformation.CornerType
-    ): ImageLoader? {
+    /**
+     * bitmap 方式获取
+     */
+    override fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?, roundRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader? {
         displayWithBitmap(context, url)
-        REQUESTINSTANCE =
-            REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0, cornerType))
+        var cornerType=when(cornerTypeMenu){
+            CornerTypeMenu.ALL->RoundedCornersTransformation.CornerType.ALL
+            CornerTypeMenu.TOP_LEFT->RoundedCornersTransformation.CornerType.TOP_LEFT
+            CornerTypeMenu.TOP_RIGHT->RoundedCornersTransformation.CornerType.TOP_RIGHT
+            CornerTypeMenu.BOTTOM_LEFT->RoundedCornersTransformation.CornerType.BOTTOM_LEFT
+            CornerTypeMenu.BOTTOM_RIGHT->RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
+            CornerTypeMenu.TOP->RoundedCornersTransformation.CornerType.TOP
+            CornerTypeMenu.BOTTOM->RoundedCornersTransformation.CornerType.BOTTOM
+            CornerTypeMenu.LEFT->RoundedCornersTransformation.CornerType.LEFT
+            CornerTypeMenu.RIGHT->RoundedCornersTransformation.CornerType.RIGHT
+            CornerTypeMenu.OTHER_TOP_LEFT->RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT
+            CornerTypeMenu.OTHER_TOP_RIGHT->RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT
+            CornerTypeMenu.OTHER_BOTTOM_LEFT->RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT
+            CornerTypeMenu.OTHER_BOTTOM_RIGHT->RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_LEFT->RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_RIGHT->RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT
+        }
+        REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0, cornerType))
         return INSTANCE
     }
 
@@ -403,9 +503,17 @@ class GlideImageLoader : ImageLoader {
     /**
      * 重置占位图
      */
-    @SuppressLint("CheckResult")
-    override fun resetPlaceHolder(placeholder: Int, error: Int): ImageLoader? {
-        REQUESTINSTANCE = REQUESTINSTANCE?.error(error)?.placeholder(placeholder)
+    override fun <RESHOLDER, RESERROR> resetPlaceHolder(placeholder: RESHOLDER, error: RESERROR
+    ): ImageLoader? {
+        when (placeholder) {
+            is Drawable -> REQUESTINSTANCE = REQUESTINSTANCE?.placeholder(placeholder)
+            is Int -> REQUESTINSTANCE = REQUESTINSTANCE?.placeholder(placeholder)
+        }
+        when (error){
+            is Drawable -> REQUESTINSTANCE = REQUESTINSTANCE?.error(error)
+            is Int -> REQUESTINSTANCE = REQUESTINSTANCE?.error(error)
+
+        }
         return INSTANCE
     }
 
@@ -420,7 +528,7 @@ class GlideImageLoader : ImageLoader {
      * 重置缓存策略
      */
     override fun resetDiskCacheStrategy(strategy: DiskCacheStrategy): ImageLoader? {
-        REQUESTINSTANCE=REQUESTINSTANCE?.diskCacheStrategy(strategy)
+        REQUESTINSTANCE = REQUESTINSTANCE?.diskCacheStrategy(strategy)
         return INSTANCE
     }
 
@@ -433,6 +541,45 @@ class GlideImageLoader : ImageLoader {
             onProgressListener.onProgress(true, 100, 0, 0)
             ProgressManager.removeListener(url)
         }
+    }
+
+    /**
+     * 设置缓存模式
+     */
+    private fun initDiskCacheMode(diskCacheMenu: DiskCacheMenu) {
+        var diskcacheStrategy = when (diskCacheMenu) {
+            DiskCacheMenu.ALL -> DiskCacheStrategy.ALL
+            DiskCacheMenu.NONE -> DiskCacheStrategy.NONE
+            DiskCacheMenu.RESOURCE -> DiskCacheStrategy.RESOURCE
+            DiskCacheMenu.AUTOMATIC -> DiskCacheStrategy.AUTOMATIC
+            DiskCacheMenu.DATA -> DiskCacheStrategy.DATA
+        }
+        resetOptionsCacheMode(diskcacheStrategy)
+    }
+
+    /**
+     * 设置options缓存模式
+     */
+    private fun resetOptionsCacheMode(diskcacheStrategy: DiskCacheStrategy) {
+        defaultOptions?.diskCacheStrategy(diskcacheStrategy)
+        centerCropOptions?.diskCacheStrategy(diskcacheStrategy)
+        centerInsideOptions?.diskCacheStrategy(diskcacheStrategy)
+        fitCenterOptions?.diskCacheStrategy(diskcacheStrategy)
+        circleCropOptions?.diskCacheStrategy(diskcacheStrategy)
+    }
+
+    /**
+     * 内存缓存清理（主线程）
+     */
+    override fun clearMemoryCache(context: Context?) {
+        context?.let { GlideApp.get(it).clearMemory() }
+    }
+
+    /**
+     * 磁盘缓存清理（子线程）
+     */
+    override fun clearFileCache(context: Context?) {
+        Thread(Runnable { context?.let { GlideApp.get(it).clearDiskCache() } }).start()
     }
 
     /**
@@ -458,15 +605,4 @@ class GlideImageLoader : ImageLoader {
 //        })
 
 //    }
-
-    //内存缓存清理（主线程）
-    fun clearMemoryCache(context: Context?) {
-        GlideApp.get(context!!).clearMemory()
-
-    }
-
-    //磁盘缓存清理（子线程）
-    fun clearFileCache(context: Context?) {
-        Thread(Runnable { GlideApp.get(context!!).clearDiskCache() }).start()
-    }
 }

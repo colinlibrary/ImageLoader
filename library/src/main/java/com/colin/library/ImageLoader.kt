@@ -1,5 +1,6 @@
 package com.colin.library
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -40,7 +41,7 @@ interface ImageLoader {
     /**
      * drable 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithDrable(context: CONTEXT, url: RES?,roundRadius: Int, cornerType: RoundedCornersTransformation.CornerType): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithDrable(context: CONTEXT, url: RES?,roundRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader?
 
     /**
      * bitmap 的方式获取资源
@@ -50,7 +51,7 @@ interface ImageLoader {
     /**
      * bitmap 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?,roundRadius: Int, cornerType: RoundedCornersTransformation.CornerType): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?,roundRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader?
 
     /**
      * 高斯模糊的方式加载
@@ -116,7 +117,7 @@ interface ImageLoader {
     /**
      * 重置占位图
      */
-    fun resetPlaceHolder(placeholder: Int, error: Int): ImageLoader?
+    fun <RESHOLDER, RESERROR>resetPlaceHolder(placeholder: RESHOLDER, error: RESERROR): ImageLoader?
 
     /**
      * 重置缓存策略
@@ -128,4 +129,13 @@ interface ImageLoader {
      */
     fun intoTargetView(imageView: ImageView)
 
+    /**
+     * 内存缓存清理（主线程）
+     */
+    fun clearMemoryCache(context: Context?)
+
+    /**
+     * 磁盘缓存清理（子线程）
+     */
+    fun clearFileCache(context: Context?)
 }
