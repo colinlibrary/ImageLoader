@@ -56,17 +56,26 @@ dependencies {
 @Override
 public void onCreate() {
     super.onCreate();
-    //设置缓存策略及其展位图资源（支持Drawable和Int类型的资源）
-    GlideImageLoader.getInstance().init(DiskCacheMenu.RESOURCE,R.mipmap.header,R.mipmap.header);
+    //设置缓存策略
+    GlideImageLoader.initdiskCacheMode(DiskCacheMenu.RESOURCE);
+    //设置展位图资源（支持Drawable和Int类型的资源）
+    GlideImageLoader.initPlaceHolderAndError(R.mipmap.placeholder,R.mipmap.error);
     //设置缓存大小默认5M
-    GlideImageLoader.getInstance().initCacheSize(1025*1024*10);
+    GlideImageLoader.initCacheSize(1025*1024*10);
     //设置缓存路径默认/data/user/0/***/cache/GlideDisk
-    GlideImageLoader.getInstance().initCachePath("自定义缓存路径");
+    GlideImageLoader.initCachePath("自定义缓存路径");
+    //设置淡入动画时间（默认500毫秒）
+    GlideImageLoader.initCrossTime(600);
 }
 ```
 
 ### 使用:
-
+1.普通方式使用
+```java
+   //context 支持 Activity，Fragment，View，Service类型
+   GlideImageLoader.getInstance().displayWithDrable(context,url)?.intoTargetView(targetView)
+   GlideImageLoader.getInstance().displayWithBitmap(context,url)?.intoTargetView(targetView)
+```
 
 ## 缺点
 
