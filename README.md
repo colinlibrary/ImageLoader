@@ -33,27 +33,28 @@ ImageLoader: 基于Glide+glide：okhttp+Glide图片变换库做的一个简单�
 ## Demo
 
 ![default](https://github.com/colinlibrary/ImageLoader/blob/master/radio/device-2020-08-01-220928.mp4)
-![app-in](https://github.com/ximsfei/Res/blob/master/skin/preview/app-in.png)
-![plug-in](https://github.com/ximsfei/Res/blob/master/skin/preview/plug-in.png)
 
 ## 用法
 
-[最新版本选择, 请查看更新日志](docs/ChangeLog.md)
+   ### 导入:
 
-### 导入:
+  #### support library
 
-#### support library
-
-如果项目中还在使用support库，添加以下依赖
+Add it in your root build.gradle at the end of repositories:
 ```xml
-implementation 'skin.support:skin-support:3.1.4'                   // skin-support 基础控件支持
-implementation 'skin.support:skin-support-design:3.1.4'            // skin-support-design material design 控件支持[可选]
-implementation 'skin.support:skin-support-cardview:3.1.4'          // skin-support-cardview CardView 控件支持[可选]
-implementation 'skin.support:skin-support-constraint-layout:3.1.4' // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
 ```
-
-在Application的onCreate中初始化
-    
+Add the dependency
+```xml
+	dependencies {
+	        implementation 'com.github.colinlibrary:ImageLoader:1.0.8'
+	}
+```
 ```java
 @Override
 public void onCreate() {
