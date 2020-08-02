@@ -31,6 +31,7 @@ class GlideImageLoader : ImageLoader {
     //动画时间
     private val CROSS_TIME = 500
 
+
     //view默认宽高
     private val defaultViewWidth = 423
     private val defaultViewHeight = 537
