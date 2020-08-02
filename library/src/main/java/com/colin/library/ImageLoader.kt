@@ -3,6 +3,7 @@ package com.colin.library
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.colin.library.progress.OnProgressListener
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
@@ -116,6 +117,11 @@ interface ImageLoader {
      * 重置占位图
      */
     fun resetPlaceHolder(placeholder: Int, error: Int): ImageLoader?
+
+    /**
+     * 重置缓存策略
+     */
+    fun resetDiskCacheStrategy(strategy: DiskCacheStrategy):ImageLoader?
 
     /**
      * 设置显示view

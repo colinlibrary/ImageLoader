@@ -43,13 +43,13 @@ class GlideImageLoader : ImageLoader {
 
     //Glide ScaleType样式
     private val defaultOptions: RequestOptions =
-        RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.DATA)
+        RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
     private val centerCropOptions: RequestOptions =
-        RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.DATA)
+        RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
     private val centerInsideOptions: RequestOptions =
-        RequestOptions().centerInside().diskCacheStrategy(DiskCacheStrategy.DATA)
+        RequestOptions().centerInside().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
     private val fitCenterOptions: RequestOptions =
-        RequestOptions().fitCenter().diskCacheStrategy(DiskCacheStrategy.DATA)
+        RequestOptions().fitCenter().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
     private val circleCropOptions: RequestOptions =
         RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
 
@@ -135,7 +135,6 @@ class GlideImageLoader : ImageLoader {
      * drable 的方式获取资源
      */
     override fun <CONTEXT, RES> displayCircleWithDrable(context: CONTEXT, url: RES?): ImageLoader? {
-//        transition(DrawableTransitionOptions.with(drawableCrossFadeFactory))
         displayWithDrable(context, url)
         resetScaleType(ScaleTypeMenu.CircleCrop)
         return INSTANCE
@@ -416,6 +415,13 @@ class GlideImageLoader : ImageLoader {
         REQUESTINSTANCE?.into(imageView)
     }
 
+    /**
+     * 重置缓存策略
+     */
+    override fun resetDiskCacheStrategy(strategy: DiskCacheStrategy): ImageLoader? {
+        REQUESTINSTANCE=REQUESTINSTANCE?.diskCacheStrategy(strategy)
+        return INSTANCE
+    }
 
     /**
      * 清楚下载监听
@@ -427,7 +433,6 @@ class GlideImageLoader : ImageLoader {
             ProgressManager.removeListener(url)
         }
     }
-
 
     /**
      * 获取图片bitmap资源
@@ -452,6 +457,7 @@ class GlideImageLoader : ImageLoader {
 //        })
 
 //    }
+
     //内存缓存清理（主线程）
     fun clearMemoryCache(context: Context?) {
         GlideApp.get(context!!).clearMemory()
