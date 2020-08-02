@@ -1,12 +1,9 @@
 # ImageLoader
 
-中文 | [In English](docs/README.md) 
-
 [![skin-support](https://img.shields.io/badge/release-v1.0.8-green.svg)](http://jcenter.bintray.com/skin/support)
 
 * [介绍](#介绍)
   * [功能](#功能)
-  * [TODO](#todo)
 * [Demo](#demo)
 * [用法](#用法)
   * [导入](#导入)
@@ -38,87 +35,33 @@ ImageLoader: 基于Glide+glide：okhttp+Glide图片变换库做的一个简单�
 
    ### 导入:
 
-  #### support library
-
 Add it in your root build.gradle at the end of repositories:
 ```xml
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+allprojects {
+    repositories {
+       ...
+       maven { url 'https://jitpack.io' }
+    }
+}
 ```
 Add the dependency
 ```xml
-	dependencies {
-	        implementation 'com.github.colinlibrary:ImageLoader:1.0.8'
-	}
-```
-```java
-@Override
-public void onCreate() {
-    super.onCreate();
-    SkinCompatManager.withoutActivity(this)                         // 基础控件换肤初始化
-            .addInflater(new SkinMaterialViewInflater())            // material design 控件换肤初始化[可选]
-            .addInflater(new SkinConstraintViewInflater())          // ConstraintLayout 控件换肤初始化[可选]
-            .addInflater(new SkinCardViewInflater())                // CardView v7 控件换肤初始化[可选]
-            .setSkinStatusBarColorEnable(false)                     // 关闭状态栏换肤，默认打开[可选]
-            .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
-            .loadSkin();
+dependencies {
+   implementation 'com.github.colinlibrary:ImageLoader:1.0.8'
 }
 ```
-
-> 如果项目中使用的Activity继承自AppCompatActivity，需要重载getDelegate()方法
-
-```java
-@NonNull
-@Override
-public AppCompatDelegate getDelegate() {
-    return SkinAppCompatDelegateImpl.get(this, this);
-}
-```
-
-#### AndroidX support:
-
-如果项目中使用了[AndroidX](https://developer.android.google.cn/topic/libraries/support-library/androidx-overview), 添加以下依赖
-```xml
-implementation 'skin.support:skin-support:4.0.4'                   // skin-support
-implementation 'skin.support:skin-support-appcompat:4.0.4'         // skin-support 基础控件支持
-implementation 'skin.support:skin-support-design:4.0.4'            // skin-support-design material design 控件支持[可选]
-implementation 'skin.support:skin-support-cardview:4.0.4'          // skin-support-cardview CardView 控件支持[可选]
-implementation 'skin.support:skin-support-constraint-layout:4.0.4' // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
-```
-
-*⚠️ 从3.x.x迁移至4.0.4+, 解耦了换肤库对appcompat包的依赖，需要新增以下代码*
-```gradle
-implementation 'skin.support:skin-support-appcompat:4.0.4'         // skin-support 基础控件支持
-```
-
 在Application的onCreate中初始化
     
 ```java
 @Override
 public void onCreate() {
     super.onCreate();
-    SkinCompatManager.withoutActivity(this)
-            .addInflater(new SkinAppCompatViewInflater())           // 基础控件换肤初始化
-            .addInflater(new SkinMaterialViewInflater())            // material design 控件换肤初始化[可选]
-            .addInflater(new SkinConstraintViewInflater())          // ConstraintLayout 控件换肤初始化[可选]
-            .addInflater(new SkinCardViewInflater())                // CardView v7 控件换肤初始化[可选]
-            .setSkinStatusBarColorEnable(false)                     // 关闭状态栏换肤，默认打开[可选]
-            .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
-            .loadSkin();
-}
-```
-
-> 如果项目中使用的Activity继承自AppCompatActivity，需要重载getDelegate()方法
-
-```java
-@NonNull
-@Override
-public AppCompatDelegate getDelegate() {
-    return SkinAppCompatDelegateImpl.get(this, this);
+    //设置缓存策略及其展位图资源（支持Drawable和Int类型的资源）
+    GlideImageLoader.getInstance().init(DiskCacheMenu.RESOURCE,R.mipmap.header,R.mipmap.header);
+    //设置缓存大小默认5M
+    GlideImageLoader.getInstance().initCacheSize(1025*1024*10);
+    //设置缓存路径默认/data/user/0/***/cache/GlideDisk
+    GlideImageLoader.getInstance().initCachePath("自定义缓存路径");
 }
 ```
 
