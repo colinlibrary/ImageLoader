@@ -46,7 +46,7 @@ allprojects {
 Add the dependency
 ```xml
 dependencies {
-   implementation 'com.github.colinlibrary:ImageLoader:1.0.8'
+   implementation 'com.github.colinlibrary:ImageLoader:1.0.0'
 }
 ```
 在Application的onCreate中初始化
