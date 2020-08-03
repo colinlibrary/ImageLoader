@@ -29,7 +29,7 @@ ImageLoader: 基于Glide+glide：okhttp+Glide图片变换库做的一个简单�
 
 ## Demo
 
-![default](https://github.com/colinlibrary/ImageLoader/blob/master/shots/screen2.png)
+![default](https://github.com/colinlibrary/ImageLoader/shots/screen1.png)
 
 ## 用法
 
