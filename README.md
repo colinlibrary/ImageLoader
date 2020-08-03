@@ -178,30 +178,36 @@ cornerTypeMenu一共有
                 }
             } )?.intoTargetView(targetView)
 ```
-以上方式均支持重置加载资源宽高（针对本次加载生效）  例如：
+##### 以上方式均支持重置加载资源宽高（针对本次加载生效）  例如：
 ```java
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetTargetSize(400,400)?.intoTargetView(targetView)
 ```
 这样就以400*400为目标view去加载资源
 
-自定义缓存策略（针对本次加载生效）例如：
+##### 自定义缓存策略（针对本次加载生效）例如：
+
 ```java
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetDiskCacheStrategy(DiskCacheStrategy.DATA)?.intoTargetView(targetView)
 ```
+
 重置占位图 针对本次加载生效）placeholder,error 均支持 drawable和int 两种类型 例如：
+
 ```java
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetPlaceHolder(placeholder,error)?.intoTargetView(targetView)
 ```
 
-重置ScaleType （针对本次加载生效 请谨慎使用）
+##### 重置ScaleType （针对本次加载生效 请谨慎使用）
+
 ```java
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetScaleType(ScaleTypeMenu.CenterCrop)?.intoTargetView(targetView)
 ```
+
 ScaleTypeMenu 共支持 
 ```java
     Default,CenterCrop,CenterInside,FitCenter,CircleCrop
 ```
-种类型可选择
+
+##### 种类型可选择
 
  #### 6.获取URL资源
  
