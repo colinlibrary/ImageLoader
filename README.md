@@ -28,8 +28,8 @@ ImageLoader: 基于Glide+glide：okhttp+Glide图片变换库做的一个简单�
 * [x] 支持动态修改加载图片的缓存策略。
 
 ## Demo
-
-![default](https://github.com/colinlibrary/ImageLoader/blob/master/radio/device-2020-08-01-220928.mp4)
+![Alt text](https://raw.githubusercontent.com/colinlibrary/ImageLoader/master/shots/screen1.png?raw=true "Optional Title")
+![default](https://raw.githubusercontent.com/colinlibrary/ImageLoader/master/shots/screen1.png) ![default](https://raw.githubusercontent.com/colinlibrary/ImageLoader/master/shots/screen1.png)
 
 ## 用法
 
