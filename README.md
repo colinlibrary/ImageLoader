@@ -55,6 +55,7 @@ dependencies {
 @Override
 public void onCreate() {
     super.onCreate();
+    //当然你也可以不执行此操作，那么所有配置将启用默认配置执行
     GlideImageLoader.apply(DiskCacheMenu.RESOURCE)//设置缓存策略
                 //设置展位图资源（支持Drawable和Int类型的资源）
                 .apply(R.mipmap.placeholder,R.mipmap.error)
@@ -210,12 +211,7 @@ public void onCreate() {
    
    ScaleTypeMenu 共支持 
    Default,CenterCrop,CenterInside,FitCenter,CircleCrop
-```
-
-ScaleTypeMenu 共支持 
-```java
-    Default,CenterCrop,CenterInside,FitCenter,CircleCrop
-    种类型可选择
+   种类型可选择
 ```
 
  #### 6.获取URL资源
