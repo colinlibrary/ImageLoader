@@ -1,6 +1,6 @@
 # ImageLoader
 
-[![skin-support](https://img.shields.io/badge/release-v1.0.8-green.svg)](http://jcenter.bintray.com/skin/support)
+[![skin-support](https://img.shields.io/badge/release-v1.0.0-green.svg)](http://jcenter.bintray.com/skin/support)
 
 * [介绍](#介绍)
   * [功能](#功能)
