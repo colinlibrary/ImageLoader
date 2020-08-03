@@ -19,7 +19,7 @@ package com.colin.library;//package com.ifenghui.imageloaderlibrary;
 //    public static void bindDefaultImageUrl(ImageView view, Object imageDefaultUrl){
 //        if (view==null)return;
 ////        imageDefaultUrl="http://5b0988e595225.cdn.sohucs.com/images/20171202/a1cc52d5522f48a8a2d6e7426b13f82b.gif";
-//        GlideImageLoader.getInstance().displayWithDrable(view,imageDefaultUrl).resetTargetSize(view.getWidth(),view.getHeight()).intoTargetView(view);
+//        GlideImageLoader.getInstance().displayWithdrawable(view,imageDefaultUrl).resetTargetSize(view.getWidth(),view.getHeight()).intoTargetView(view);
 //    }
 //
 //
@@ -29,7 +29,7 @@ package com.colin.library;//package com.ifenghui.imageloaderlibrary;
 //        if (view==null)return;
 //        if (imageCircleUrl==null)
 //            imageCircleUrl="http://5b0988e595225.cdn.sohucs.com/images/20171202/a1cc52d5522f48a8a2d6e7426b13f82b.gif";
-//        GlideImageLoader.getInstance().displayCircleWithDrable(view,imageCircleUrl==null ? defaultSrc : imageCircleUrl).intoTargetView(view);
+//        GlideImageLoader.getInstance().displayCircleWithdrawable(view,imageCircleUrl==null ? defaultSrc : imageCircleUrl).intoTargetView(view);
 ////        GlideImageLoader.getInstance().displayWithBlurRound(view,imageCircleUrl==null ? defaultSrc : imageCircleUrl,20,1000).intoTargetView(view);
 //    }
 //}

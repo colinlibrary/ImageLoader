@@ -44,7 +44,7 @@ class GlideImageLoader : ImageLoader {
 
     //Glide ScaleType样式
     private val defaultOptions: RequestOptions =
-        RequestOptions().centerCrop()
+        RequestOptions()
     private val centerCropOptions: RequestOptions =
         RequestOptions().centerCrop()
     private val centerInsideOptions: RequestOptions =
@@ -183,9 +183,9 @@ class GlideImageLoader : ImageLoader {
 
 
     /**
-     * drable 的方式获取资源
+     * drawable 的方式获取资源
      */
-    override fun <CONTEXT, RES> displayWithDrable(context: CONTEXT, url: RES?): ImageLoader? {
+    override fun <CONTEXT, RES> displayWithDrawable(context: CONTEXT, url: RES?): ImageLoader? {
         REQUESTINSTANCE =
             getGlideWith(context)?.asDrawable()?.load(url)?.transition(drawableCrossFade)
         initDiskCacheMode(diskCacheMenu ?: DiskCacheMenu.AUTOMATIC)
@@ -215,56 +215,39 @@ class GlideImageLoader : ImageLoader {
     }
 
     /**
-     * drable 的方式获取资源
+     * drawable 的方式获取资源
      */
-    override fun <CONTEXT, RES> displayCircleWithDrable(context: CONTEXT, url: RES?): ImageLoader? {
-        displayWithDrable(context, url)
+    override fun <CONTEXT, RES> displayCircleWithDrawable(context: CONTEXT, url: RES?): ImageLoader? {
+        displayWithDrawable(context, url)
         resetScaleType(ScaleTypeMenu.CircleCrop)
         return INSTANCE
     }
 
     /**
-     * drable 的方式获取资源
+     * drawable 的方式获取资源
      */
-    override fun <CONTEXT, RES> displayRoundWithDrable(
+    override fun <CONTEXT, RES> displayRoundWithDrawable(
         context: CONTEXT,
         url: RES?,
-        roundRadius: Int
+        cornerRadius: Int
     ): ImageLoader? {
-        displayWithDrable(context, url)
-        REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0))
+        displayWithDrawable(context, url)
+        REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0))
         return INSTANCE
     }
 
     /**
-     * drable 的方式获取资源
+     * drawable 的方式获取资源
      */
-    override fun <CONTEXT, RES> displayRoundWithDrable(
+    override fun <CONTEXT, RES> displayRoundWithDrawable(
         context: CONTEXT,
         url: RES?,
-        roundRadius: Int,
+        cornerRadius: Int,
         cornerTypeMenu: CornerTypeMenu
     ): ImageLoader? {
-        displayWithDrable(context, url)
-        var cornerType = when (cornerTypeMenu) {
-            CornerTypeMenu.ALL -> RoundedCornersTransformation.CornerType.ALL
-            CornerTypeMenu.TOP_LEFT -> RoundedCornersTransformation.CornerType.TOP_LEFT
-            CornerTypeMenu.TOP_RIGHT -> RoundedCornersTransformation.CornerType.TOP_RIGHT
-            CornerTypeMenu.BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-            CornerTypeMenu.BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-            CornerTypeMenu.TOP -> RoundedCornersTransformation.CornerType.TOP
-            CornerTypeMenu.BOTTOM -> RoundedCornersTransformation.CornerType.BOTTOM
-            CornerTypeMenu.LEFT -> RoundedCornersTransformation.CornerType.LEFT
-            CornerTypeMenu.RIGHT -> RoundedCornersTransformation.CornerType.RIGHT
-            CornerTypeMenu.OTHER_TOP_LEFT -> RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT
-            CornerTypeMenu.OTHER_TOP_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT
-            CornerTypeMenu.OTHER_BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT
-            CornerTypeMenu.OTHER_BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT
-            CornerTypeMenu.DIAGONAL_FROM_TOP_LEFT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT
-            CornerTypeMenu.DIAGONAL_FROM_TOP_RIGHT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT
-        }
+        displayWithDrawable(context, url)
         REQUESTINSTANCE =
-            REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0, cornerType))
+            REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0, getCornerType(cornerTypeMenu)))
         return INSTANCE
     }
 
@@ -274,10 +257,10 @@ class GlideImageLoader : ImageLoader {
     override fun <CONTEXT, RES> displayRoundWithBitmap(
         context: CONTEXT,
         url: RES?,
-        roundRadius: Int
+        cornerRadius: Int
     ): ImageLoader? {
         displayWithBitmap(context, url)
-        REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0))
+        REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0))
         return INSTANCE
     }
 
@@ -287,29 +270,12 @@ class GlideImageLoader : ImageLoader {
     override fun <CONTEXT, RES> displayRoundWithBitmap(
         context: CONTEXT,
         url: RES?,
-        roundRadius: Int,
+        cornerRadius: Int,
         cornerTypeMenu: CornerTypeMenu
     ): ImageLoader? {
         displayWithBitmap(context, url)
-        var cornerType = when (cornerTypeMenu) {
-            CornerTypeMenu.ALL -> RoundedCornersTransformation.CornerType.ALL
-            CornerTypeMenu.TOP_LEFT -> RoundedCornersTransformation.CornerType.TOP_LEFT
-            CornerTypeMenu.TOP_RIGHT -> RoundedCornersTransformation.CornerType.TOP_RIGHT
-            CornerTypeMenu.BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.BOTTOM_LEFT
-            CornerTypeMenu.BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
-            CornerTypeMenu.TOP -> RoundedCornersTransformation.CornerType.TOP
-            CornerTypeMenu.BOTTOM -> RoundedCornersTransformation.CornerType.BOTTOM
-            CornerTypeMenu.LEFT -> RoundedCornersTransformation.CornerType.LEFT
-            CornerTypeMenu.RIGHT -> RoundedCornersTransformation.CornerType.RIGHT
-            CornerTypeMenu.OTHER_TOP_LEFT -> RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT
-            CornerTypeMenu.OTHER_TOP_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT
-            CornerTypeMenu.OTHER_BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT
-            CornerTypeMenu.OTHER_BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT
-            CornerTypeMenu.DIAGONAL_FROM_TOP_LEFT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT
-            CornerTypeMenu.DIAGONAL_FROM_TOP_RIGHT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT
-        }
         REQUESTINSTANCE =
-            REQUESTINSTANCE?.transform(RoundedCornersTransformation(roundRadius, 0, cornerType))
+            REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0, getCornerType(cornerTypeMenu)))
         return INSTANCE
     }
 
@@ -333,28 +299,48 @@ class GlideImageLoader : ImageLoader {
         context: CONTEXT,
         url: RES?,
         blurRadius: Int,
-        roundRadius: Int
+        cornerRadius: Int
     ): ImageLoader? {
         displayWithBitmap(context, url)
         REQUESTINSTANCE = REQUESTINSTANCE?.transform(
             MultiTransformation(
                 BlurTransformation(blurRadius),
-                RoundedCornersTransformation(roundRadius, 0)
+                RoundedCornersTransformation(cornerRadius, 0)
             )
         )
         return INSTANCE
     }
 
     /**
-     * 添加drable 加载监听
+     * 高斯模糊加圆角的方式加载
      */
-    override fun <CONTEXT, RES> displayWithDrable(
+    override fun <CONTEXT, RES> displayWithBlurRound(
+        context: CONTEXT,
+        url: RES?,
+        blurRadius: Int,
+        cornerRadius: Int,
+        cornerTypeMenu: CornerTypeMenu
+    ): ImageLoader? {
+        displayWithBitmap(context, url)
+        REQUESTINSTANCE = REQUESTINSTANCE?.transform(
+            MultiTransformation(
+                BlurTransformation(blurRadius),
+                RoundedCornersTransformation(cornerRadius, 0,getCornerType(cornerTypeMenu))
+            )
+        )
+        return INSTANCE
+    }
+
+    /**
+     * 添加drawable 加载监听
+     */
+    override fun <CONTEXT, RES> displayWithDrawable(
         context: CONTEXT,
         url: RES?,
         imageListener: ImageLoaderListener<Drawable>?
     ): ImageLoader? {
 
-        displayWithDrable(context, url)
+        displayWithDrawable(context, url)
         REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Drawable>)?.addListener(object :
             RequestListener<Drawable> {
             override fun onLoadFailed(
@@ -382,16 +368,16 @@ class GlideImageLoader : ImageLoader {
     }
 
     /**
-     * 添加drable 加载进度监听
+     * 添加drawable 加载进度监听
      */
-    override fun <CONTEXT, RES> displayWithDrable(
+    override fun <CONTEXT, RES> displayWithDrawable(
         context: CONTEXT,
         url: RES?,
         onProgressListener: OnProgressListener<Drawable>?
     ): ImageLoader? {
         if (onProgressListener != null && url is String)
             ProgressManager.addListener(url, onProgressListener)
-        displayWithDrable(context, url)
+        displayWithDrawable(context, url)
         REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Drawable>)?.addListener(object :
             RequestListener<Drawable> {
             override fun onLoadFailed(
@@ -400,6 +386,7 @@ class GlideImageLoader : ImageLoader {
                 target: Target<Drawable>?,
                 isFirstResource: Boolean
             ): Boolean {
+                onProgressListener?.onFailed()
                 if (onProgressListener != null && url is String)
                     removeProcessListener(url)
                 return false
@@ -475,6 +462,7 @@ class GlideImageLoader : ImageLoader {
                 target: Target<Bitmap>?,
                 isFirstResource: Boolean
             ): Boolean {
+                onProgressListener?.onFailed()
                 if (onProgressListener != null && url is String)
                     removeProcessListener(url)
                 return false
@@ -591,6 +579,29 @@ class GlideImageLoader : ImageLoader {
     }
 
     /**
+     * 获取cornertype
+     */
+    private fun getCornerType(cornerTypeMenu:CornerTypeMenu):RoundedCornersTransformation.CornerType{
+        return when (cornerTypeMenu) {
+            CornerTypeMenu.ALL -> RoundedCornersTransformation.CornerType.ALL
+            CornerTypeMenu.TOP_LEFT -> RoundedCornersTransformation.CornerType.TOP_LEFT
+            CornerTypeMenu.TOP_RIGHT -> RoundedCornersTransformation.CornerType.TOP_RIGHT
+            CornerTypeMenu.BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.BOTTOM_LEFT
+            CornerTypeMenu.BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.BOTTOM_RIGHT
+            CornerTypeMenu.TOP -> RoundedCornersTransformation.CornerType.TOP
+            CornerTypeMenu.BOTTOM -> RoundedCornersTransformation.CornerType.BOTTOM
+            CornerTypeMenu.LEFT -> RoundedCornersTransformation.CornerType.LEFT
+            CornerTypeMenu.RIGHT -> RoundedCornersTransformation.CornerType.RIGHT
+            CornerTypeMenu.OTHER_TOP_LEFT -> RoundedCornersTransformation.CornerType.OTHER_TOP_LEFT
+            CornerTypeMenu.OTHER_TOP_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_TOP_RIGHT
+            CornerTypeMenu.OTHER_BOTTOM_LEFT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_LEFT
+            CornerTypeMenu.OTHER_BOTTOM_RIGHT -> RoundedCornersTransformation.CornerType.OTHER_BOTTOM_RIGHT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_LEFT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_LEFT
+            CornerTypeMenu.DIAGONAL_FROM_TOP_RIGHT -> RoundedCornersTransformation.CornerType.DIAGONAL_FROM_TOP_RIGHT
+        }
+    }
+
+    /**
      * 内存缓存清理（主线程）
      */
     override fun clearMemoryCache(context: Context?) {
@@ -645,6 +656,7 @@ class GlideImageLoader : ImageLoader {
 
                 override fun onLoadFailed(errorDrawable: Drawable?) {
                     super.onLoadFailed(errorDrawable)
+                    onProgressListener?.onFailed()
                     if (onProgressListener != null && url is String)
                         removeProcessListener(url)
                 }
@@ -654,7 +666,7 @@ class GlideImageLoader : ImageLoader {
     /**
      * 获取URL  drawable资源
      */
-    override fun <CONTEXT, RES> getUrlWitDrawable(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Drawable>?) {
+    override fun <CONTEXT, RES> getUrlWithDrawable(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Drawable>?) {
         getGlideWith(context)?.asDrawable()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
             ?.into(object : SimpleTarget<Drawable>() {
                 override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
@@ -688,33 +700,11 @@ class GlideImageLoader : ImageLoader {
 
                 override fun onLoadFailed(errorDrawable: Drawable?) {
                     super.onLoadFailed(errorDrawable)
+                    onProgressListener?.onFailed()
                     if (onProgressListener != null && url is String)
                         removeProcessListener(url)
                 }
             })
     }
 
-    /**
-     * 获取图片bitmap资源
-     */
-//    override fun <CONTEXT, RES> getImageUrlBitmap(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener?, onProgressListener: OnProgressListener?) {
-//        if (onProgressListener != null && url is String)
-//            ProgressManager.addListener(url, onProgressListener)
-//        getGlideRequest(context, url)
-//        (REQUESTINSTANCE?.diskCacheStrategy(DiskCacheStrategy.RESOURCE) as GlideRequest<Drawable>)?.into(object : SimpleTarget<Drawable>() {
-//            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-//                imageListener?.onRequestSuccess(resource)
-//                if (onProgressListener != null && url is String)
-//                    removeProcessListener(url)
-//            }
-//
-//            override fun onLoadFailed(errorDrawable: Drawable?) {
-//                super.onLoadFailed(errorDrawable)
-//                imageListener?.onRequestFailed()
-//                if (onProgressListener != null && url is String)
-//                    removeProcessListener(url)
-//            }
-//        })
-
-//    }
 }

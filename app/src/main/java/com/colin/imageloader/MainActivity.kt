@@ -6,10 +6,12 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.colin.library.CornerTypeMenu
 import com.colin.library.progress.OnProgressListener
 import com.colin.library.GlideImageLoader
 import com.colin.library.ImageLoaderListener
+import com.colin.library.ScaleTypeMenu
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -28,17 +30,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadImage(){
-        GlideImageLoader.getInstance().displayWithDrable(this,defaultUrl)?.intoTargetView(iv_defalult)
+        GlideImageLoader.getInstance().displayWithDrawable(this,defaultUrl)?.resetDiskCacheStrategy(
+            DiskCacheStrategy.DATA)?.intoTargetView(iv_defalult)
         GlideImageLoader.getInstance().displayWithBitmap(this,defaultUrl2)?.intoTargetView(iv_defalult_bitmap)
-        GlideImageLoader.getInstance().displayRoundWithDrable(this,defaultUrl3,30,
+        GlideImageLoader.getInstance().displayRoundWithDrawable(this,defaultUrl3,30,
             CornerTypeMenu.ALL)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_round)
         GlideImageLoader.getInstance().displayRoundWithBitmap(this,defaultUrl3,30,
             CornerTypeMenu.TOP)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_bitmap_round)
-        GlideImageLoader.getInstance().displayRoundWithDrable(this,defaultUrl4,30)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_gif)
-        GlideImageLoader.getInstance().displayCircleWithDrable(this,defaultUrl4)?.intoTargetView(iv_defalult_git_round)
+        GlideImageLoader.getInstance().displayRoundWithDrawable(this,defaultUrl4,30)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_gif)
+        GlideImageLoader.getInstance().displayCircleWithDrawable(this,defaultUrl4)?.intoTargetView(iv_defalult_git_round)
         GlideImageLoader.getInstance().displayWithBlur(this,defaultUrl,20)?.intoTargetView(iv_defalult_blur)
         GlideImageLoader.getInstance().displayWithBlurRound(this,defaultUrl,20,10)?.intoTargetView(iv_defalult_blur_round)
-        GlideImageLoader.getInstance().displayWithBlurRound(this,defaultUrl,20,1000)?.intoTargetView(iv_defalult_blur_circle)
+        GlideImageLoader.getInstance().displayWithBlurRound(this,defaultUrl,20,1000)?.resetScaleType(ScaleTypeMenu.CenterCrop)?.intoTargetView(iv_defalult_blur_circle)
     }
 
 
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
         tv_process?.setOnClickListener {
             tv_process?.text="0%"
-            GlideImageLoader.getInstance().displayWithDrable(this,defaultUrl5,object : OnProgressListener<Drawable>{
+            GlideImageLoader.getInstance().displayWithDrawable(this,defaultUrl5,object : OnProgressListener<Drawable>{
                 override fun onProgress(
                     isComplete: Boolean,
                     percentage: Int,
@@ -71,6 +74,10 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onComplete(resource: Drawable?) {
                     tv_process?.visibility=View.INVISIBLE
+                }
+
+                override fun onFailed() {
+
                 }
             } )?.intoTargetView(iv_defalult_process)
         }
@@ -90,6 +97,10 @@ class MainActivity : AppCompatActivity() {
                 override fun onComplete(resource: Bitmap?) {
                     tv_getUrl_process?.visibility=View.INVISIBLE
                     iv_getUrl?.setImageBitmap(resource)
+                }
+
+                override fun onFailed() {
+
                 }
             })
         }

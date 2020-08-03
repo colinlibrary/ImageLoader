@@ -14,9 +14,9 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 interface ImageLoader {
 
     /**
-     * drable 的方式获取资源
+     * drawable 的方式获取资源
      */
-    fun <CONTEXT, RES> displayWithDrable(context: CONTEXT, url: RES?): ImageLoader?
+    fun <CONTEXT, RES> displayWithDrawable(context: CONTEXT, url: RES?): ImageLoader?
 
     /**
      * bitmap 的方式获取资源
@@ -24,9 +24,9 @@ interface ImageLoader {
     fun <CONTEXT, RES> displayWithBitmap(context: CONTEXT, url: RES?): ImageLoader?
 
     /**
-     * drable 的方式获取资源
+     * drawable 的方式获取资源
      */
-    fun <CONTEXT, RES> displayCircleWithDrable(context: CONTEXT, url: RES?): ImageLoader?
+    fun <CONTEXT, RES> displayCircleWithDrawable(context: CONTEXT, url: RES?): ImageLoader?
 
     /**
      * bitmap 的方式获取资源
@@ -34,42 +34,24 @@ interface ImageLoader {
     fun <CONTEXT, RES> displayCircleWithBitmap(context: CONTEXT, url: RES?): ImageLoader?
 
     /**
-     * drable 的方式获取资源
+     * drawable 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithDrable(
-        context: CONTEXT,
-        url: RES?,
-        roundRadius: Int
-    ): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithDrawable(context: CONTEXT, url: RES?, cornerRadius: Int): ImageLoader?
 
     /**
-     * drable 的方式获取资源
+     * drawable 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithDrable(
-        context: CONTEXT,
-        url: RES?,
-        roundRadius: Int,
-        cornerTypeMenu: CornerTypeMenu
-    ): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithDrawable(context: CONTEXT, url: RES?, cornerRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader?
 
     /**
      * bitmap 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        roundRadius: Int
-    ): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?, cornerRadius: Int): ImageLoader?
 
     /**
      * bitmap 的方式获取资源
      */
-    fun <CONTEXT, RES> displayRoundWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        roundRadius: Int,
-        cornerTypeMenu: CornerTypeMenu
-    ): ImageLoader?
+    fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?, cornerRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader?
 
     /**
      * 高斯模糊的方式加载
@@ -79,48 +61,32 @@ interface ImageLoader {
     /**
      * 高斯模糊加圆角的方式加载
      */
-    fun <CONTEXT, RES> displayWithBlurRound(
-        context: CONTEXT,
-        url: RES?,
-        blurRadius: Int,
-        roundRadius: Int
-    ): ImageLoader?
+    fun <CONTEXT, RES> displayWithBlurRound(context: CONTEXT, url: RES?, blurRadius: Int, cornerRadius: Int): ImageLoader?
 
     /**
-     * 添加drable 加载监听
+     * 高斯模糊加圆角的方式加载
      */
-    fun <CONTEXT, RES> displayWithDrable(
-        context: CONTEXT,
-        url: RES?,
-        imageListener: ImageLoaderListener<Drawable>?
-    ): ImageLoader?
+    fun <CONTEXT, RES> displayWithBlurRound(context: CONTEXT, url: RES?, blurRadius: Int, cornerRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader?
 
     /**
-     * 添加drable 加载进度监听
+     * 添加drawable 加载监听
      */
-    fun <CONTEXT, RES> displayWithDrable(
-        context: CONTEXT,
-        url: RES?,
-        onProgressListener: OnProgressListener<Drawable>?
-    ): ImageLoader?
+    fun <CONTEXT, RES> displayWithDrawable(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Drawable>?): ImageLoader?
+
+    /**
+     * 添加drawable 加载进度监听
+     */
+    fun <CONTEXT, RES> displayWithDrawable(context: CONTEXT, url: RES?, onProgressListener: OnProgressListener<Drawable>?): ImageLoader?
 
     /**
      * 添加bitmap 加载监听
      */
-    fun <CONTEXT, RES> displayWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        imageListener: ImageLoaderListener<Bitmap>?
-    ): ImageLoader?
+    fun <CONTEXT, RES> displayWithBitmap(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Bitmap>?): ImageLoader?
 
     /**
      * 添加bitmap 加载进度监听
      */
-    fun <CONTEXT, RES> displayWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        onProgressListener: OnProgressListener<Bitmap>?
-    ): ImageLoader?
+    fun <CONTEXT, RES> displayWithBitmap(context: CONTEXT, url: RES?, onProgressListener: OnProgressListener<Bitmap>?): ImageLoader?
 
     /**
      * 获取URL  bitmap资源
@@ -140,7 +106,7 @@ interface ImageLoader {
     /**
      * 获取URL  drawable资源
      */
-    fun <CONTEXT, RES> getUrlWitDrawable(
+    fun <CONTEXT, RES> getUrlWithDrawable(
         context: CONTEXT,
         url: RES?, imageListener: ImageLoaderListener<Drawable>?
     )

@@ -14,7 +14,7 @@
 
 ImageLoader: 基于Glide+glide：okhttp+Glide图片变换库做的一个简单的封装.极大的简化使用Glide成本：
 ```java
-   GlideImageLoader.getInstance().displayWithDrable(context,url)?.intoTargetView(imageview)
+   GlideImageLoader.getInstance().displayWithdrawable(context,url)?.intoTargetView(imageview)
 ```
 最基础的使用，这样便可实现普通图片以及GIF图的加载显示。
 
@@ -73,7 +73,7 @@ public void onCreate() {
 1.普通方式使用
 ```java
    //context 支持 Activity，Fragment，View，Service类型
-   GlideImageLoader.getInstance().displayWithDrable(context,url)?.intoTargetView(targetView)
+   GlideImageLoader.getInstance().displayWithdrawable(context,url)?.intoTargetView(targetView)
    GlideImageLoader.getInstance().displayWithBitmap(context,url)?.intoTargetView(targetView)
 ```
 
