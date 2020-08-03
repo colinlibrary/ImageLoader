@@ -65,6 +65,11 @@ public void onCreate() {
                 //设置缓存路径默认/data/user/0/***/cache/GlideDisk
                 //.apply("自定义缓存路径");
 }
+
+如果选用外部存储 请添加相应权限
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
+以及动态申请相应权限
 ```
 
 ### 使用:
