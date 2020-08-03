@@ -405,7 +405,12 @@ class GlideImageLoader : ImageLoader {
                 return false
             }
 
-            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: Target<Drawable>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean
             ): Boolean {
                 onProgressListener?.onComplete(resource)
                 if (onProgressListener != null && url is String)
@@ -635,13 +640,56 @@ class GlideImageLoader : ImageLoader {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     onProgressListener?.onComplete(resource)
                     if (onProgressListener != null && url is String)
-                    removeProcessListener(url)
+                        removeProcessListener(url)
                 }
 
                 override fun onLoadFailed(errorDrawable: Drawable?) {
                     super.onLoadFailed(errorDrawable)
                     if (onProgressListener != null && url is String)
-                    removeProcessListener(url)
+                        removeProcessListener(url)
+                }
+            })
+    }
+
+    /**
+     * 获取URL  drawable资源
+     */
+    override fun <CONTEXT, RES> getUrlWitDrawable(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Drawable>?) {
+        getGlideWith(context)?.asDrawable()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
+            ?.into(object : SimpleTarget<Drawable>() {
+                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                    imageListener?.onRequestSuccess(resource)
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    super.onLoadFailed(errorDrawable)
+                    imageListener?.onRequestFailed()
+                }
+            })
+    }
+
+    /**
+     * 获取URL  drawable资源
+     */
+    override fun <CONTEXT, RES> getUrlWithDrawable(
+        context: CONTEXT,
+        url: RES?,
+        onProgressListener: OnProgressListener<Drawable>?
+    ) {
+        if (onProgressListener != null && url is String)
+            ProgressManager.addListener(url, onProgressListener)
+        getGlideWith(context)?.asDrawable()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
+            ?.into(object : SimpleTarget<Drawable>() {
+                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                    onProgressListener?.onComplete(resource)
+                    if (onProgressListener != null && url is String)
+                        removeProcessListener(url)
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    super.onLoadFailed(errorDrawable)
+                    if (onProgressListener != null && url is String)
+                        removeProcessListener(url)
                 }
             })
     }

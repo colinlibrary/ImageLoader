@@ -137,7 +137,20 @@ interface ImageLoader {
         url: RES?, onProgressListener: OnProgressListener<Bitmap>?
     )
 
-
+    /**
+     * 获取URL  drawable资源
+     */
+    fun <CONTEXT, RES> getUrlWitDrawable(
+        context: CONTEXT,
+        url: RES?, imageListener: ImageLoaderListener<Drawable>?
+    )
+    /**
+     * 获取URL  drawable资源
+     */
+    fun <CONTEXT, RES> getUrlWithDrawable(
+        context: CONTEXT,
+        url: RES?, onProgressListener: OnProgressListener<Drawable>?
+    )
     /**
      * 重置ScaleType （此变换会覆盖GLide之前对资源做的变化）
      */

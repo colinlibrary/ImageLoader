@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var defaultUrl3="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596177054579&di=18d88b391aa5ed7f58318c640fc4be8e&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Ffront%2F435%2Fw640h595%2F20181130%2FErE8-hpevhcm5473942.jpg"
     private var defaultUrl4="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596188810464&di=69def7b3d4deac127c2ac47e110c55db&imgtype=0&src=http%3A%2F%2Ff.mgame.netease.com%2Fforum%2Fmonth_1505%2F150529124521aac0a2a5ca6192.gif"
     private var defaultUrl5="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596188810462&di=f31ae97156adb3470e3e8af40230b9a7&imgtype=0&src=http%3A%2F%2Fimg2.100bt.com%2Fupload%2Fttq%2F20121029%2F1351501394920.gif"
+    private var defaultUrl6="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2853553659,1775735885&fm=26&gp=0.jpg"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -72,6 +73,25 @@ class MainActivity : AppCompatActivity() {
                     tv_process?.visibility=View.INVISIBLE
                 }
             } )?.intoTargetView(iv_defalult_process)
+        }
+
+        tv_getUrl_process?.setOnClickListener {
+            tv_getUrl_process?.text="0%"
+            GlideImageLoader.getInstance().getUrlWithBitmap(this,defaultUrl6,object :OnProgressListener<Bitmap>{
+                override fun onProgress(
+                    isComplete: Boolean,
+                    percentage: Int,
+                    bytesRead: Long,
+                    totalBytes: Long
+                ) {
+                    tv_getUrl_process?.text=percentage?.toString()+"%"
+                }
+
+                override fun onComplete(resource: Bitmap?) {
+                    tv_getUrl_process?.visibility=View.INVISIBLE
+                    iv_getUrl?.setImageBitmap(resource)
+                }
+            })
         }
     }
 }
