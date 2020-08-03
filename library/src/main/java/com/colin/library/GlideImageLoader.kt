@@ -658,6 +658,7 @@ class GlideImageLoader : ImageLoader {
                     super.onLoadFailed(errorDrawable)
                     onProgressListener?.onFailed()
                     if (onProgressListener != null && url is String)
+
                         removeProcessListener(url)
                 }
             })
