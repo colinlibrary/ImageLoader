@@ -70,7 +70,7 @@ public void onCreate() {
 
 ### 使用:
 
- ####1.普通方式使用 
+ #### 1.普通方式使用 
  
 以下方式均 支持bitmap和drawable  想要加载GIF类型的资源选用drawable方式即可  
 ```java
@@ -79,7 +79,7 @@ public void onCreate() {
    GlideImageLoader.getInstance().displayWithBitmap(context,url)?.intoTargetView(targetView)
 ```
 
- ####2.加载圆型图片  
+ #### 2.加载圆型图片  
  
 ```java
    //context 支持 Activity，Fragment，View，Service类型
@@ -87,7 +87,7 @@ public void onCreate() {
    GlideImageLoader.getInstance().displayCircleWithBitmap(context,url)?.intoTargetView(targetView)
 ```
 
- ####3.加载圆角图片
+ #### 3.加载圆角图片
  
 ```java
    //context 支持 Activity，Fragment，View，Service类型
@@ -97,14 +97,16 @@ public void onCreate() {
    GlideImageLoader.getInstance().displayRoundWithBitmap(context,url,cornerRadius,cornerTypeMenu)?.intoTargetView(targetView)
 ```
 cornerTypeMenu一共有 
+```java
     ALL,
     TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT,
     TOP, BOTTOM, LEFT, RIGHT,
     OTHER_TOP_LEFT, OTHER_TOP_RIGHT, OTHER_BOTTOM_LEFT, OTHER_BOTTOM_RIGHT,
     DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
+```
     种类型可以选择
     
- ####4.高斯模糊加圆角的方式加载
+ #### 4.高斯模糊加圆角的方式加载
  
 ```java
    //context 支持 Activity，Fragment，View，Service类型
@@ -113,14 +115,16 @@ cornerTypeMenu一共有
    GlideImageLoader.getInstance().displayWithBlurRound(context,url,blurRadius,cornerRadius,cornerTypeMenu)?.intoTargetView(targetView)
 ```
 同样的cornerTypeMenu一共有 
+```java
     ALL,
     TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT,
     TOP, BOTTOM, LEFT, RIGHT,
     OTHER_TOP_LEFT, OTHER_TOP_RIGHT, OTHER_BOTTOM_LEFT, OTHER_BOTTOM_RIGHT,
     DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
-    种类型可以选择
+```
+ 种类型可以选择
     
- ####5.资源加载监听
+ #### 5.资源加载监听
  
 ```java
    //context 支持 Activity，Fragment，View，Service类型
@@ -194,9 +198,12 @@ cornerTypeMenu一共有
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetScaleType(ScaleTypeMenu.CenterCrop)?.intoTargetView(targetView)
 ```
 ScaleTypeMenu 共支持 
-Default,CenterCrop,CenterInside,FitCenter,CircleCrop;类型
+```java
+    Default,CenterCrop,CenterInside,FitCenter,CircleCrop
+```
+种类型可选择
 
- ####6.获取URL资源
+ #### 6.获取URL资源
  
 ```java
   
@@ -251,7 +258,7 @@ Default,CenterCrop,CenterInside,FitCenter,CircleCrop;类型
             })
 ```
 
- ####7.缓存清理 
+ #### 7.缓存清理 
  
 ```java
    /**
