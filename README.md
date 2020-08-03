@@ -95,16 +95,16 @@ public void onCreate() {
    GlideImageLoader.getInstance().displayRoundWithDrawable(context,url,cornerRadius,cornerTypeMenu)?.intoTargetView(targetView)
    GlideImageLoader.getInstance().displayRoundWithBitmap(context,url,cornerRadius)?.intoTargetView(targetView)
    GlideImageLoader.getInstance().displayRoundWithBitmap(context,url,cornerRadius,cornerTypeMenu)?.intoTargetView(targetView)
+   
+   cornerTypeMenu一共有 
+   ALL,
+   TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT,
+   TOP, BOTTOM, LEFT, RIGHT,
+   OTHER_TOP_LEFT, OTHER_TOP_RIGHT, OTHER_BOTTOM_LEFT, OTHER_BOTTOM_RIGHT,
+   DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
+   种类型可以选择
 ```
-cornerTypeMenu一共有 
-```java
-    ALL,
-    TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT,
-    TOP, BOTTOM, LEFT, RIGHT,
-    OTHER_TOP_LEFT, OTHER_TOP_RIGHT, OTHER_BOTTOM_LEFT, OTHER_BOTTOM_RIGHT,
-    DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
-```
-    种类型可以选择
+  
     
  #### 4.高斯模糊加圆角的方式加载
  
@@ -113,16 +113,17 @@ cornerTypeMenu一共有
    GlideImageLoader.getInstance().displayWithBlur(context,url,cornerRadius)?.intoTargetView(targetView)
    GlideImageLoader.getInstance().displayWithBlurRound(context,url,blurRadius,cornerRadius)?.intoTargetView(targetView)
    GlideImageLoader.getInstance().displayWithBlurRound(context,url,blurRadius,cornerRadius,cornerTypeMenu)?.intoTargetView(targetView)
+   
+   
+   同样的cornerTypeMenu一共有 
+   ALL,
+   TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT,
+   TOP, BOTTOM, LEFT, RIGHT,
+   OTHER_TOP_LEFT, OTHER_TOP_RIGHT, OTHER_BOTTOM_LEFT, OTHER_BOTTOM_RIGHT,
+   DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
+   种类型可以选择
 ```
-同样的cornerTypeMenu一共有 
-```java
-    ALL,
-    TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT,
-    TOP, BOTTOM, LEFT, RIGHT,
-    OTHER_TOP_LEFT, OTHER_TOP_RIGHT, OTHER_BOTTOM_LEFT, OTHER_BOTTOM_RIGHT,
-    DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
-```
- 种类型可以选择
+
     
  #### 5.资源加载监听
  
@@ -181,8 +182,10 @@ cornerTypeMenu一共有
 #####  * 以上方式均支持重置加载资源宽高（针对本次加载生效）  例如：
 ```java
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetTargetSize(400,400)?.intoTargetView(targetView)
+   
+   这样就以400*400为目标view去加载资源
 ```
-这样就以400*400为目标view去加载资源
+
 
 ##### * 自定义缓存策略（针对本次加载生效）例如：
 
@@ -190,7 +193,7 @@ cornerTypeMenu一共有
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetDiskCacheStrategy(DiskCacheStrategy.DATA)?.intoTargetView(targetView)
 ```
 
-重置占位图 针对本次加载生效）placeholder,error 均支持 drawable和int 两种类型 例如：
+##### *重置占位图（针对本次加载生效）placeholder,error 均支持 drawable和int 两种类型 例如：
 
 ```java
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetPlaceHolder(placeholder,error)?.intoTargetView(targetView)
@@ -200,13 +203,16 @@ cornerTypeMenu一共有
 
 ```java
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetScaleType(ScaleTypeMenu.CenterCrop)?.intoTargetView(targetView)
+   
+   ScaleTypeMenu 共支持 
+   Default,CenterCrop,CenterInside,FitCenter,CircleCrop
 ```
 
 ScaleTypeMenu 共支持 
 ```java
     Default,CenterCrop,CenterInside,FitCenter,CircleCrop
+    种类型可选择
 ```
-种类型可选择
 
  #### 6.获取URL资源
  
