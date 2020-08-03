@@ -69,21 +69,26 @@ public void onCreate() {
 ```
 
 ### 使用:
-1.普通方式使用 
+
+ ####1.普通方式使用 
+ 
 以下方式均 支持bitmap和drawable  想要加载GIF类型的资源选用drawable方式即可  
 ```java
    //context 支持 Activity，Fragment，View，Service类型
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.intoTargetView(targetView)
    GlideImageLoader.getInstance().displayWithBitmap(context,url)?.intoTargetView(targetView)
 ```
-2.加载圆型图片  
+
+ ####2.加载圆型图片  
+ 
 ```java
    //context 支持 Activity，Fragment，View，Service类型
    GlideImageLoader.getInstance().displayCircleWithDrawable(context,url)?.intoTargetView(targetView)
    GlideImageLoader.getInstance().displayCircleWithBitmap(context,url)?.intoTargetView(targetView)
 ```
 
-3.加载圆角图片
+ ####3.加载圆角图片
+ 
 ```java
    //context 支持 Activity，Fragment，View，Service类型
    GlideImageLoader.getInstance().displayRoundWithDrawable(context,url,cornerRadius)?.intoTargetView(targetView)
@@ -99,7 +104,8 @@ cornerTypeMenu一共有
     DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
     种类型可以选择
     
-4.高斯模糊加圆角的方式加载
+ ####4.高斯模糊加圆角的方式加载
+ 
 ```java
    //context 支持 Activity，Fragment，View，Service类型
    GlideImageLoader.getInstance().displayWithBlur(context,url,cornerRadius)?.intoTargetView(targetView)
@@ -113,7 +119,9 @@ cornerTypeMenu一共有
     OTHER_TOP_LEFT, OTHER_TOP_RIGHT, OTHER_BOTTOM_LEFT, OTHER_BOTTOM_RIGHT,
     DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
     种类型可以选择
-5.资源加载监听
+    
+ ####5.资源加载监听
+ 
 ```java
    //context 支持 Activity，Fragment，View，Service类型
    //bitmap方式加载
@@ -188,7 +196,8 @@ cornerTypeMenu一共有
 ScaleTypeMenu 共支持 
 Default,CenterCrop,CenterInside,FitCenter,CircleCrop;类型
 
-6.获取URL资源
+ ####6.获取URL资源
+ 
 ```java
   
    //bitmap方式
@@ -242,7 +251,8 @@ Default,CenterCrop,CenterInside,FitCenter,CircleCrop;类型
             })
 ```
 
-7.缓存清理 
+ ####7.缓存清理 
+ 
 ```java
    /**
      * 内存缓存清理（主线程）
