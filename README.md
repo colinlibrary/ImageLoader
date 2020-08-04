@@ -77,7 +77,7 @@ public void onCreate() {
 
  #### 1.普通方式使用 
  
-以下方式均 支持bitmap和drawable  想要加载GIF类型的资源选用drawable方式即可  
+以下方式均 支持bitmap和drawable两种方式  想要加载GIF类型的资源选用drawable方式即可  
 ```java
    //context 支持 Activity，Fragment，View，Service类型
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.intoTargetView(targetView)
