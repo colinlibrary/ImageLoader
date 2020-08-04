@@ -12,7 +12,7 @@
 
 ## 介绍
 
-ImageLoader: 基于Glide+glide：okhttp+Glide图片变换库做的一个简单的封装.极大的简化使用Glide成本：
+ImageLoader: 基于Glide + glide:okhttp + Glide图片变换库做的一个简单的封装.极大的简化使用Glide成本：
 ```java
    GlideImageLoader.getInstance().displayWithDrable(context,url)?.intoTargetView(imageview)
 ```
