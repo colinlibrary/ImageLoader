@@ -1,6 +1,6 @@
 # ImageLoader
 
-[![skin-support](https://img.shields.io/badge/release-v1.0.8-green.svg)](http://jcenter.bintray.com/skin/support)
+[![skin-support](https://img.shields.io/badge/release-v1.0.0-green.svg)](http://jcenter.bintray.com/skin/support)
 
 * [介绍](#介绍)
   * [功能](#功能)
@@ -12,7 +12,7 @@
 
 ## 介绍
 
-ImageLoader: 基于Glide+glide：okhttp+Glide图片变换库做的一个简单的封装.极大的简化使用Glide成本：
+ImageLoader: 基于Glide + glide:okhttp + Glide图片变换库做的一个简单的封装.极大的简化使用Glide成本：
 ```java
    GlideImageLoader.getInstance().displayWithDrable(context,url)?.intoTargetView(imageview)
 ```
@@ -55,6 +55,7 @@ dependencies {
 @Override
 public void onCreate() {
     super.onCreate();
+    //当然你也可以不执行此操作，那么所有配置将启用默认配置执行
     GlideImageLoader.apply(DiskCacheMenu.RESOURCE)//设置缓存策略
                 //设置展位图资源（支持Drawable和Int类型的资源）
                 .apply(R.mipmap.placeholder,R.mipmap.error)
@@ -65,13 +66,18 @@ public void onCreate() {
                 //设置缓存路径默认/data/user/0/***/cache/GlideDisk
                 //.apply("自定义缓存路径");
 }
+
+如果选用外部存储 请添加相应权限
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
+以及动态申请相应权限
 ```
 
 ### 使用:
 
  #### 1.普通方式使用 
  
-以下方式均 支持bitmap和drawable  想要加载GIF类型的资源选用drawable方式即可  
+以下方式均 支持bitmap和drawable两种方式  想要加载GIF类型的资源选用drawable方式即可  
 ```java
    //context 支持 Activity，Fragment，View，Service类型
    GlideImageLoader.getInstance().displayWithDrawable(context,url)?.intoTargetView(targetView)
@@ -205,12 +211,7 @@ public void onCreate() {
    
    ScaleTypeMenu 共支持 
    Default,CenterCrop,CenterInside,FitCenter,CircleCrop
-```
-
-ScaleTypeMenu 共支持 
-```java
-    Default,CenterCrop,CenterInside,FitCenter,CircleCrop
-    种类型可选择
+   种类型可选择
 ```
 
  #### 6.获取URL资源
