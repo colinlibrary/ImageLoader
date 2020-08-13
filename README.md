@@ -215,7 +215,7 @@ public void onCreate() {
 ```
 
 
-##### * 重置CrossFade 过渡时长 （针对本次加载生效 请谨慎使用）
+##### * 重置CrossFade 过渡时长 （针对本次加载生效）
 
 ```java
    //以毫秒为时间单位
