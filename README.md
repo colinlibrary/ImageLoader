@@ -1,6 +1,6 @@
 # ImageLoader
 
-[![skin-support](https://img.shields.io/badge/release-v1.0.0-green.svg)](http://jcenter.bintray.com/skin/support)
+[![skin-support](https://img.shields.io/badge/release-v1.0.11-green.svg)](http://jcenter.bintray.com/skin/support)
 
 * [介绍](#介绍)
   * [功能](#功能)
@@ -46,7 +46,7 @@ allprojects {
 Add the dependency
 ```xml
 dependencies {
-   implementation 'com.github.colinlibrary:ImageLoader:1.0.0'
+   implementation 'com.github.colinlibrary:ImageLoader:1.0.11'
 }
 ```
 在Application的onCreate中初始化
@@ -212,6 +212,14 @@ public void onCreate() {
    ScaleTypeMenu 共支持 
    Default,CenterCrop,CenterInside,FitCenter,CircleCrop
    种类型可选择
+```
+
+
+##### * 重置CrossFade 过渡时长 （针对本次加载生效 请谨慎使用）
+
+```java
+   //以毫秒为时间单位
+   GlideImageLoader.getInstance().displayWithDrawable(context,url)?.resetCrossFadeTime(100)?.intoTargetView(targetView)
 ```
 
  #### 6.获取URL资源
