@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadImage(){
-        GlideImageLoader.getInstance().displayWithDrawable(this,defaultUrl)?.resetDiskCacheStrategy(DiskCacheStrategy.DATA)?.intoTargetView(iv_defalult)
+        GlideImageLoader.getInstance().displayWithDrawable(this,defaultUrl)?.resetCrossFadeTime(100)?.resetDiskCacheStrategy(DiskCacheStrategy.DATA)?.intoTargetView(iv_defalult)
         GlideImageLoader.getInstance().displayWithBitmap(this,defaultUrl2)?.resetCrossFadeTime(100)?.intoTargetView(iv_defalult_bitmap)
         GlideImageLoader.getInstance().displayRoundWithDrawable(this,defaultUrl3,30, CornerTypeMenu.ALL)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_round)
         GlideImageLoader.getInstance().displayRoundWithBitmap(this,defaultUrl3,30, CornerTypeMenu.TOP)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_bitmap_round)

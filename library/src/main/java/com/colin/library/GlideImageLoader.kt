@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -512,13 +513,17 @@ class GlideImageLoader : ImageLoader {
      * 重置CrossFade时间
      */
     override fun resetCrossFadeTime(crossTime:Int): ImageLoader?{
-        val tempDrawableCrossFadeFactory: DrawableCrossFadeFactory = DrawableCrossFadeFactory.Builder(crossTime).setCrossFadeEnabled(true).build()
-        REQUESTINSTANCE = try {
-            val tempBitmapCrossFade = BitmapTransitionOptions().crossFade(tempDrawableCrossFadeFactory)
-            (REQUESTINSTANCE as GlideRequest<Bitmap>?)?.transition(tempBitmapCrossFade)
-        }catch (e:ClassCastException){
-            val tempDrawableCrossFade = DrawableTransitionOptions().crossFade(tempDrawableCrossFadeFactory)
-            (REQUESTINSTANCE as GlideRequest<Drawable>?)?.transition(tempDrawableCrossFade)
+        REQUESTINSTANCE =try {
+            val tempDrawableCrossFadeFactory: DrawableCrossFadeFactory = DrawableCrossFadeFactory.Builder(crossTime).setCrossFadeEnabled(true).build()
+            val resourceClass = REQUESTINSTANCE?.resourceClass
+            val javaClassName = Bitmap::class.java
+            if (resourceClass==javaClassName){
+                val tempBitmapCrossFade = BitmapTransitionOptions().crossFade(tempDrawableCrossFadeFactory)
+                (REQUESTINSTANCE as GlideRequest<Bitmap>?)?.transition(tempBitmapCrossFade)
+            }else {
+                val tempDrawableCrossFade = DrawableTransitionOptions().crossFade(tempDrawableCrossFadeFactory)
+                (REQUESTINSTANCE as GlideRequest<Drawable>?)?.transition(tempDrawableCrossFade)
+            }
         }catch (e:Exception){
             REQUESTINSTANCE
         }
