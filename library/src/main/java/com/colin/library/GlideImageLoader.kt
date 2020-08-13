@@ -24,6 +24,7 @@ import com.colin.library.progress.OnProgressListener
 import com.colin.library.progress.ProgressManager
 import jp.wasabeef.glide.transformations.BlurTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import java.lang.Exception
 
 /**
  * Glide图片处理类
@@ -186,8 +187,7 @@ class GlideImageLoader : ImageLoader {
      * drawable 的方式获取资源
      */
     override fun <CONTEXT, RES> displayWithDrawable(context: CONTEXT, url: RES?): ImageLoader? {
-        REQUESTINSTANCE =
-            getGlideWith(context)?.asDrawable()?.load(url)?.transition(drawableCrossFade)
+        REQUESTINSTANCE = getGlideWith(context)?.asDrawable()?.load(url)?.transition(drawableCrossFade)
         initDiskCacheMode(diskCacheMenu ?: DiskCacheMenu.AUTOMATIC)
         resetPlaceHolder(placeHolderId, errorId)
         resetScaleType(ScaleTypeMenu.Default)
@@ -226,11 +226,7 @@ class GlideImageLoader : ImageLoader {
     /**
      * drawable 的方式获取资源
      */
-    override fun <CONTEXT, RES> displayRoundWithDrawable(
-        context: CONTEXT,
-        url: RES?,
-        cornerRadius: Int
-    ): ImageLoader? {
+    override fun <CONTEXT, RES> displayRoundWithDrawable(context: CONTEXT, url: RES?, cornerRadius: Int): ImageLoader? {
         displayWithDrawable(context, url)
         REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0))
         return INSTANCE
@@ -239,27 +235,16 @@ class GlideImageLoader : ImageLoader {
     /**
      * drawable 的方式获取资源
      */
-    override fun <CONTEXT, RES> displayRoundWithDrawable(
-        context: CONTEXT,
-        url: RES?,
-        cornerRadius: Int,
-        cornerTypeMenu: CornerTypeMenu
-    ): ImageLoader? {
+    override fun <CONTEXT, RES> displayRoundWithDrawable(context: CONTEXT, url: RES?, cornerRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader? {
         displayWithDrawable(context, url)
-        REQUESTINSTANCE =
-            REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0, getCornerType(cornerTypeMenu)))
+        REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0, getCornerType(cornerTypeMenu)))
         return INSTANCE
     }
 
     /**
      * bitmpa 的方式获取资源
      */
-    override fun <CONTEXT, RES> displayRoundWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        cornerRadius: Int
-    ): ImageLoader? {
-        displayWithBitmap(context, url)
+    override fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?, cornerRadius: Int): ImageLoader? { displayWithBitmap(context, url)
         REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0))
         return INSTANCE
     }
@@ -267,27 +252,16 @@ class GlideImageLoader : ImageLoader {
     /**
      * bitmap 方式获取
      */
-    override fun <CONTEXT, RES> displayRoundWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        cornerRadius: Int,
-        cornerTypeMenu: CornerTypeMenu
-    ): ImageLoader? {
+    override fun <CONTEXT, RES> displayRoundWithBitmap(context: CONTEXT, url: RES?, cornerRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader? {
         displayWithBitmap(context, url)
-        REQUESTINSTANCE =
-            REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0, getCornerType(cornerTypeMenu)))
+        REQUESTINSTANCE = REQUESTINSTANCE?.transform(RoundedCornersTransformation(cornerRadius, 0, getCornerType(cornerTypeMenu)))
         return INSTANCE
     }
 
     /**
      * 高斯模糊的方式加载
      */
-    override fun <CONTEXT, RES> displayWithBlur(
-        context: CONTEXT,
-        url: RES?,
-        blurRadius: Int
-    ): ImageLoader? {
-        displayWithBitmap(context, url)
+    override fun <CONTEXT, RES> displayWithBlur(context: CONTEXT, url: RES?, blurRadius: Int): ImageLoader? { displayWithBitmap(context, url)
         REQUESTINSTANCE = REQUESTINSTANCE?.transform(BlurTransformation(blurRadius))
         return INSTANCE
     }
@@ -295,71 +269,33 @@ class GlideImageLoader : ImageLoader {
     /**
      * 高斯模糊加圆角的方式加载
      */
-    override fun <CONTEXT, RES> displayWithBlurRound(
-        context: CONTEXT,
-        url: RES?,
-        blurRadius: Int,
-        cornerRadius: Int
-    ): ImageLoader? {
+    override fun <CONTEXT, RES> displayWithBlurRound(context: CONTEXT, url: RES?, blurRadius: Int, cornerRadius: Int): ImageLoader? {
         displayWithBitmap(context, url)
-        REQUESTINSTANCE = REQUESTINSTANCE?.transform(
-            MultiTransformation(
-                BlurTransformation(blurRadius),
-                RoundedCornersTransformation(cornerRadius, 0)
-            )
-        )
+        REQUESTINSTANCE = REQUESTINSTANCE?.transform(MultiTransformation(BlurTransformation(blurRadius), RoundedCornersTransformation(cornerRadius, 0)))
         return INSTANCE
     }
 
     /**
      * 高斯模糊加圆角的方式加载
      */
-    override fun <CONTEXT, RES> displayWithBlurRound(
-        context: CONTEXT,
-        url: RES?,
-        blurRadius: Int,
-        cornerRadius: Int,
-        cornerTypeMenu: CornerTypeMenu
-    ): ImageLoader? {
+    override fun <CONTEXT, RES> displayWithBlurRound(context: CONTEXT, url: RES?, blurRadius: Int, cornerRadius: Int, cornerTypeMenu: CornerTypeMenu): ImageLoader? {
         displayWithBitmap(context, url)
-        REQUESTINSTANCE = REQUESTINSTANCE?.transform(
-            MultiTransformation(
-                BlurTransformation(blurRadius),
-                RoundedCornersTransformation(cornerRadius, 0,getCornerType(cornerTypeMenu))
-            )
-        )
+        REQUESTINSTANCE = REQUESTINSTANCE?.transform(MultiTransformation(BlurTransformation(blurRadius), RoundedCornersTransformation(cornerRadius, 0,getCornerType(cornerTypeMenu))))
         return INSTANCE
     }
 
     /**
      * 添加drawable 加载监听
      */
-    override fun <CONTEXT, RES> displayWithDrawable(
-        context: CONTEXT,
-        url: RES?,
-        imageListener: ImageLoaderListener<Drawable>?
-    ): ImageLoader? {
-
+    override fun <CONTEXT, RES> displayWithDrawable(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Drawable>?): ImageLoader? {
         displayWithDrawable(context, url)
-        REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Drawable>)?.addListener(object :
-            RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
+        REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Drawable>)?.addListener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                 imageListener?.onRequestFailed()
                 return false
             }
 
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
+            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                 imageListener?.onRequestSuccess(resource)
                 return false
             }
@@ -370,35 +306,19 @@ class GlideImageLoader : ImageLoader {
     /**
      * 添加drawable 加载进度监听
      */
-    override fun <CONTEXT, RES> displayWithDrawable(
-        context: CONTEXT,
-        url: RES?,
-        onProgressListener: OnProgressListener<Drawable>?
-    ): ImageLoader? {
+    override fun <CONTEXT, RES> displayWithDrawable(context: CONTEXT, url: RES?, onProgressListener: OnProgressListener<Drawable>?): ImageLoader? {
         if (onProgressListener != null && url is String)
             ProgressManager.addListener(url, onProgressListener)
         displayWithDrawable(context, url)
-        REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Drawable>)?.addListener(object :
-            RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
+        REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Drawable>).addListener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                 onProgressListener?.onFailed()
                 if (onProgressListener != null && url is String)
                     removeProcessListener(url)
                 return false
             }
 
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
+            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                 onProgressListener?.onComplete(resource)
                 if (onProgressListener != null && url is String)
                     removeProcessListener(url)
@@ -411,31 +331,15 @@ class GlideImageLoader : ImageLoader {
     /**
      * 添加bitmap 加载监听
      */
-    override fun <CONTEXT, RES> displayWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        imageListener: ImageLoaderListener<Bitmap>?
-    ): ImageLoader? {
+    override fun <CONTEXT, RES> displayWithBitmap(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Bitmap>?): ImageLoader? {
         displayWithBitmap(context, url)
-        REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Bitmap>)?.addListener(object :
-            RequestListener<Bitmap> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Bitmap>?,
-                isFirstResource: Boolean
-            ): Boolean {
+        REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Bitmap>)?.addListener(object : RequestListener<Bitmap> {
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
                 imageListener?.onRequestFailed()
                 return false
             }
 
-            override fun onResourceReady(
-                resource: Bitmap?,
-                model: Any?,
-                target: Target<Bitmap>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
+            override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                 imageListener?.onRequestSuccess(resource)
                 return false
             }
@@ -446,35 +350,19 @@ class GlideImageLoader : ImageLoader {
     /**
      * 添加bitmap 加载进度监听
      */
-    override fun <CONTEXT, RES> displayWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        onProgressListener: OnProgressListener<Bitmap>?
-    ): ImageLoader? {
+    override fun <CONTEXT, RES> displayWithBitmap(context: CONTEXT, url: RES?, onProgressListener: OnProgressListener<Bitmap>?): ImageLoader? {
         if (onProgressListener != null && url is String)
             ProgressManager.addListener(url, onProgressListener)
         displayWithBitmap(context, url)
-        REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Bitmap>)?.addListener(object :
-            RequestListener<Bitmap> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Bitmap>?,
-                isFirstResource: Boolean
-            ): Boolean {
+        REQUESTINSTANCE = (REQUESTINSTANCE as GlideRequest<Bitmap>).addListener(object : RequestListener<Bitmap> {
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
                 onProgressListener?.onFailed()
                 if (onProgressListener != null && url is String)
                     removeProcessListener(url)
                 return false
             }
 
-            override fun onResourceReady(
-                resource: Bitmap?,
-                model: Any?,
-                target: Target<Bitmap>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
+            override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                 onProgressListener?.onComplete(resource)
                 if (onProgressListener != null && url is String)
                     removeProcessListener(url)
@@ -482,6 +370,86 @@ class GlideImageLoader : ImageLoader {
             }
         })
         return INSTANCE
+    }
+
+
+    /**
+     * 获取URL  bitmap资源
+     */
+    override fun <CONTEXT, RES> getUrlWithBitmap(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Bitmap>?) {
+        getGlideWith(context)?.asBitmap()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
+            ?.into(object : SimpleTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    imageListener?.onRequestSuccess(resource)
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    super.onLoadFailed(errorDrawable)
+                    imageListener?.onRequestFailed()
+                }
+            })
+    }
+
+    /**
+     * 获取URL  bitmap资源
+     */
+    override fun <CONTEXT, RES> getUrlWithBitmap(context: CONTEXT, url: RES?, onProgressListener: OnProgressListener<Bitmap>?) {
+        if (onProgressListener != null && url is String)
+            ProgressManager.addListener(url, onProgressListener)
+        getGlideWith(context)?.asBitmap()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)?.into(object : SimpleTarget<Bitmap>() {
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                onProgressListener?.onComplete(resource)
+                if (onProgressListener != null && url is String)
+                    removeProcessListener(url)
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                onProgressListener?.onFailed()
+                if (onProgressListener != null && url is String)
+
+                    removeProcessListener(url)
+            }
+        })
+    }
+
+    /**
+     * 获取URL  drawable资源
+     */
+    override fun <CONTEXT, RES> getUrlWithDrawable(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Drawable>?) {
+        getGlideWith(context)?.asDrawable()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
+            ?.into(object : SimpleTarget<Drawable>() {
+                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                    imageListener?.onRequestSuccess(resource)
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    super.onLoadFailed(errorDrawable)
+                    imageListener?.onRequestFailed()
+                }
+            })
+    }
+
+    /**
+     * 获取URL  drawable资源
+     */
+    override fun <CONTEXT, RES> getUrlWithDrawable(context: CONTEXT, url: RES?, onProgressListener: OnProgressListener<Drawable>?) {
+        if (onProgressListener != null && url is String)
+            ProgressManager.addListener(url, onProgressListener)
+        getGlideWith(context)?.asDrawable()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)?.into(object : SimpleTarget<Drawable>() {
+            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                onProgressListener?.onComplete(resource)
+                if (onProgressListener != null && url is String)
+                    removeProcessListener(url)
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                onProgressListener?.onFailed()
+                if (onProgressListener != null && url is String)
+                    removeProcessListener(url)
+            }
+        })
     }
 
     /**
@@ -512,9 +480,7 @@ class GlideImageLoader : ImageLoader {
     /**
      * 重置占位图
      */
-    override fun <RESHOLDER, RESERROR> resetPlaceHolder(
-        placeholder: RESHOLDER, error: RESERROR
-    ): ImageLoader? {
+    override fun <RESHOLDER, RESERROR> resetPlaceHolder(placeholder: RESHOLDER, error: RESERROR): ImageLoader? {
         when (placeholder) {
             is Drawable -> REQUESTINSTANCE = REQUESTINSTANCE?.placeholder(placeholder)
             is Int -> REQUESTINSTANCE = REQUESTINSTANCE?.placeholder(placeholder)
@@ -539,6 +505,23 @@ class GlideImageLoader : ImageLoader {
      */
     override fun resetDiskCacheStrategy(strategy: DiskCacheStrategy): ImageLoader? {
         REQUESTINSTANCE = REQUESTINSTANCE?.diskCacheStrategy(strategy)
+        return INSTANCE
+    }
+
+    /**
+     * 重置CrossFade时间
+     */
+    override fun resetCrossFadeTime(crossTime:Int): ImageLoader?{
+        val tempDrawableCrossFadeFactory: DrawableCrossFadeFactory = DrawableCrossFadeFactory.Builder(crossTime).setCrossFadeEnabled(true).build()
+        REQUESTINSTANCE = try {
+            val tempBitmapCrossFade = BitmapTransitionOptions().crossFade(tempDrawableCrossFadeFactory)
+            (REQUESTINSTANCE as GlideRequest<Bitmap>?)?.transition(tempBitmapCrossFade)
+        }catch (e:ClassCastException){
+            val tempDrawableCrossFade = DrawableTransitionOptions().crossFade(tempDrawableCrossFadeFactory)
+            (REQUESTINSTANCE as GlideRequest<Drawable>?)?.transition(tempDrawableCrossFade)
+        }catch (e:Exception){
+            REQUESTINSTANCE
+        }
         return INSTANCE
     }
 
@@ -570,6 +553,7 @@ class GlideImageLoader : ImageLoader {
     /**
      * 设置options缓存模式
      */
+    @SuppressLint("CheckResult")
     private fun resetOptionsCacheMode(diskcacheStrategy: DiskCacheStrategy) {
         defaultOptions?.diskCacheStrategy(diskcacheStrategy)
         centerCropOptions?.diskCacheStrategy(diskcacheStrategy)
@@ -615,97 +599,5 @@ class GlideImageLoader : ImageLoader {
         Thread(Runnable { context?.let { GlideApp.get(it).clearDiskCache() } }).start()
     }
 
-    /**
-     * 获取URL  bitmap资源
-     */
-    override fun <CONTEXT, RES> getUrlWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        imageListener: ImageLoaderListener<Bitmap>?
-    ) {
-        getGlideWith(context)?.asBitmap()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
-            ?.into(object : SimpleTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    imageListener?.onRequestSuccess(resource)
-                }
-
-                override fun onLoadFailed(errorDrawable: Drawable?) {
-                    super.onLoadFailed(errorDrawable)
-                    imageListener?.onRequestFailed()
-                }
-            })
-    }
-
-    /**
-     * 获取URL  bitmap资源
-     */
-    override fun <CONTEXT, RES> getUrlWithBitmap(
-        context: CONTEXT,
-        url: RES?,
-        onProgressListener: OnProgressListener<Bitmap>?
-    ) {
-        if (onProgressListener != null && url is String)
-            ProgressManager.addListener(url, onProgressListener)
-        getGlideWith(context)?.asBitmap()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
-            ?.into(object : SimpleTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    onProgressListener?.onComplete(resource)
-                    if (onProgressListener != null && url is String)
-                        removeProcessListener(url)
-                }
-
-                override fun onLoadFailed(errorDrawable: Drawable?) {
-                    super.onLoadFailed(errorDrawable)
-                    onProgressListener?.onFailed()
-                    if (onProgressListener != null && url is String)
-
-                        removeProcessListener(url)
-                }
-            })
-    }
-
-    /**
-     * 获取URL  drawable资源
-     */
-    override fun <CONTEXT, RES> getUrlWithDrawable(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Drawable>?) {
-        getGlideWith(context)?.asDrawable()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
-            ?.into(object : SimpleTarget<Drawable>() {
-                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                    imageListener?.onRequestSuccess(resource)
-                }
-
-                override fun onLoadFailed(errorDrawable: Drawable?) {
-                    super.onLoadFailed(errorDrawable)
-                    imageListener?.onRequestFailed()
-                }
-            })
-    }
-
-    /**
-     * 获取URL  drawable资源
-     */
-    override fun <CONTEXT, RES> getUrlWithDrawable(
-        context: CONTEXT,
-        url: RES?,
-        onProgressListener: OnProgressListener<Drawable>?
-    ) {
-        if (onProgressListener != null && url is String)
-            ProgressManager.addListener(url, onProgressListener)
-        getGlideWith(context)?.asDrawable()?.load(url)?.diskCacheStrategy(DiskCacheStrategy.NONE)
-            ?.into(object : SimpleTarget<Drawable>() {
-                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                    onProgressListener?.onComplete(resource)
-                    if (onProgressListener != null && url is String)
-                        removeProcessListener(url)
-                }
-
-                override fun onLoadFailed(errorDrawable: Drawable?) {
-                    super.onLoadFailed(errorDrawable)
-                    onProgressListener?.onFailed()
-                    if (onProgressListener != null && url is String)
-                        removeProcessListener(url)
-                }
-            })
-    }
 
 }

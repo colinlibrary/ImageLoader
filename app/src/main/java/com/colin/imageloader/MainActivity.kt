@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var defaultUrl="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2249871602,59311995&fm=11&gp=0.jpg"
     private var defaultUrl2="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596176909598&di=6acb306592ba8f5d14b353a4793b827a&imgtype=0&src=http%3A%2F%2Fimg1.touxiang.cn%2Fuploads%2F20131121%2F21-074918_36.jpg"
     private var defaultUrl3="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596177054579&di=18d88b391aa5ed7f58318c640fc4be8e&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Ffront%2F435%2Fw640h595%2F20181130%2FErE8-hpevhcm5473942.jpg"
-    private var defaultUrl4="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596188810464&di=69def7b3d4deac127c2ac47e110c55db&imgtype=0&src=http%3A%2F%2Ff.mgame.netease.com%2Fforum%2Fmonth_1505%2F150529124521aac0a2a5ca6192.gif"
+    private var defaultUrl4="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2011142830,1985471998&fm=26&gp=0.jpg"
     private var defaultUrl5="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1596188810462&di=f31ae97156adb3470e3e8af40230b9a7&imgtype=0&src=http%3A%2F%2Fimg2.100bt.com%2Fupload%2Fttq%2F20121029%2F1351501394920.gif"
     private var defaultUrl6="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2853553659,1775735885&fm=26&gp=0.jpg"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,13 +30,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadImage(){
-        GlideImageLoader.getInstance().displayWithDrawable(this,defaultUrl)?.resetDiskCacheStrategy(
-            DiskCacheStrategy.DATA)?.intoTargetView(iv_defalult)
-        GlideImageLoader.getInstance().displayWithBitmap(this,defaultUrl2)?.intoTargetView(iv_defalult_bitmap)
-        GlideImageLoader.getInstance().displayRoundWithDrawable(this,defaultUrl3,30,
-            CornerTypeMenu.ALL)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_round)
-        GlideImageLoader.getInstance().displayRoundWithBitmap(this,defaultUrl3,30,
-            CornerTypeMenu.TOP)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_bitmap_round)
+        GlideImageLoader.getInstance().displayWithDrawable(this,defaultUrl)?.resetDiskCacheStrategy(DiskCacheStrategy.DATA)?.intoTargetView(iv_defalult)
+        GlideImageLoader.getInstance().displayWithBitmap(this,defaultUrl2)?.resetCrossFadeTime(100)?.intoTargetView(iv_defalult_bitmap)
+        GlideImageLoader.getInstance().displayRoundWithDrawable(this,defaultUrl3,30, CornerTypeMenu.ALL)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_round)
+        GlideImageLoader.getInstance().displayRoundWithBitmap(this,defaultUrl3,30, CornerTypeMenu.TOP)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_bitmap_round)
         GlideImageLoader.getInstance().displayRoundWithDrawable(this,defaultUrl4,30)?.resetTargetSize(400,400)?.intoTargetView(iv_defalult_gif)
         GlideImageLoader.getInstance().displayCircleWithDrawable(this,defaultUrl4)?.intoTargetView(iv_defalult_git_round)
         GlideImageLoader.getInstance().displayWithBlur(this,defaultUrl,20)?.intoTargetView(iv_defalult_blur)

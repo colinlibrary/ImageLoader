@@ -12,7 +12,7 @@ public class AppContext extends Application {
         super.onCreate();
         GlideImageLoader.apply(DiskCacheMenu.RESOURCE)
                 .apply(R.mipmap.header, R.mipmap.header)
-                .apply(600)
+                .apply(6000)
                 .apply(1025 * 1024 * 10L);
 //              .apply("cachpath");
     }

@@ -91,32 +91,20 @@ interface ImageLoader {
     /**
      * 获取URL  bitmap资源
      */
-    fun <CONTEXT, RES> getUrlWithBitmap(
-        context: CONTEXT,
-        url: RES?, imageListener: ImageLoaderListener<Bitmap>?
-    )
+    fun <CONTEXT, RES> getUrlWithBitmap(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Bitmap>?)
     /**
      * 获取URL  bitmap资源
      */
-    fun <CONTEXT, RES> getUrlWithBitmap(
-        context: CONTEXT,
-        url: RES?, onProgressListener: OnProgressListener<Bitmap>?
-    )
+    fun <CONTEXT, RES> getUrlWithBitmap(context: CONTEXT, url: RES?, onProgressListener: OnProgressListener<Bitmap>?)
 
     /**
      * 获取URL  drawable资源
      */
-    fun <CONTEXT, RES> getUrlWithDrawable(
-        context: CONTEXT,
-        url: RES?, imageListener: ImageLoaderListener<Drawable>?
-    )
+    fun <CONTEXT, RES> getUrlWithDrawable(context: CONTEXT, url: RES?, imageListener: ImageLoaderListener<Drawable>?)
     /**
      * 获取URL  drawable资源
      */
-    fun <CONTEXT, RES> getUrlWithDrawable(
-        context: CONTEXT,
-        url: RES?, onProgressListener: OnProgressListener<Drawable>?
-    )
+    fun <CONTEXT, RES> getUrlWithDrawable(context: CONTEXT, url: RES?, onProgressListener: OnProgressListener<Drawable>?)
     /**
      * 重置ScaleType （此变换会覆盖GLide之前对资源做的变化）
      */
@@ -130,15 +118,17 @@ interface ImageLoader {
     /**
      * 重置占位图
      */
-    fun <RESHOLDER, RESERROR> resetPlaceHolder(
-        placeholder: RESHOLDER,
-        error: RESERROR
-    ): ImageLoader?
+    fun <RESHOLDER, RESERROR> resetPlaceHolder(placeholder: RESHOLDER, error: RESERROR): ImageLoader?
 
     /**
      * 重置缓存策略
      */
     fun resetDiskCacheStrategy(strategy: DiskCacheStrategy): ImageLoader?
+
+    /**
+     * 重置CrossFade时间
+     */
+    fun resetCrossFadeTime(crossTime:Int): ImageLoader?
 
     /**
      * 设置显示view
